@@ -16,10 +16,8 @@ $lv = new LayoutView();
 
 if($v->submitForm() == true){
     $lv->render(true, $v, $dtv);
-    echo"ö";
 }else{
     $lv->render(false, $v, $dtv);
-    echo"b";
 }
 
 // $lv->render(false, $v, $dtv);
