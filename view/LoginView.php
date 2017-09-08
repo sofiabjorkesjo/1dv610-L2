@@ -10,8 +10,9 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
+	//private $username = "";
 	
-
+	
 	/**
 	 * Create HTTP response
 	 *
@@ -20,7 +21,9 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = '';
+		$message = $this->getRequestUserName();
+		$this->submitForm();
+		//echo"hejhej";
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
@@ -47,14 +50,16 @@ class LoginView {
 	* @return  void, BUT writes to standard output!
 	*/
 	private function generateLoginFormHTML($message) {
+		
 		return '
-			<form method="post" > 
+			<form method="post"> 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -66,11 +71,24 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
+		
+		//echo $_POST[self::$name];
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
+		$username = $_POST[self::$name];
+		return $username;
+		
+		
 		//RETURN REQUEST VARIABLE: USERNAME
+	}
+
+
+	public function submitForm(){
+		if(isset($_POST[self::$login])){
+			echo $_POST[self::$name];
+		} 
 	}
 	
 }

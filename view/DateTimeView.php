@@ -12,7 +12,7 @@ class DateTimeView {
 
 
 		//$timeString = date("l \\t\\h\\e jS \of F Y, \\T\\h\\e \\t\\i\\m\\e  \\i\\s G:i:s");
-		$timeString = $nameOfDay . " the " . $dateOfDay . " of " . $month . " " . $year . ", The time is " . $time;
+		$timeString = $nameOfDay . ", the " . $dateOfDay . " of " . $month . " " . $year . ", The time is " . $time;
 
 		return '<p>' . $timeString . '</p>';
 	}
