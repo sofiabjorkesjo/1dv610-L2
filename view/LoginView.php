@@ -9,6 +9,8 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';	
+
+	
 	
 	/**
 	 * Create HTTP response
@@ -18,11 +20,13 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = $this->getRequestUserName() . " ett meddelande";
+		$message = "";
 		//$this->submitForm();
 		$response = $this->generateLoginFormHTML($message);
 		if($this->submitForm()){
+			$message = "Welcome";
 			$response = $this->generateLogoutButtonHTML($message);
+			
 		} 
 		return $response;
 	}
@@ -71,6 +75,20 @@ class LoginView {
 		
 		//echo $_POST[self::$name];
 	}
+
+	//sätter det rätta användarnamnet och sparar det i en session
+
+	private function setCorrectUsername(){
+		$username = $_SESSION["username"] = "Admin";
+		return $username;
+	}
+
+	//sätter det rätta lösenordet och sparar det i en session
+
+	private function setCorrectPassword(){
+		$password = $_SESSION["password"] = "Password";
+		return $password;
+	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
@@ -89,15 +107,16 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == "Admin" && $this->getRequestPassword() == "Password"){
-				echo"rätt";
+			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword())
+				echo $_SESSION["username"];
+				$_SESSION["username"] = $this->getRequestUserName();
+				$_SESSION["password"] = $this->getRequestPassword();
+				var_dump($_SESSION);
 				return true;
-				
 			}else{
-				echo"fel";
 				return false;
 			}
 		} 
 	}
 	
-}
+

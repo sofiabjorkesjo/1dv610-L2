@@ -14,6 +14,11 @@ $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
 
+if(!isset($_SESSION)){
+    session_start();
+}
+
+
 if($v->submitForm() == true){
     $lv->render(true, $v, $dtv);
 }else{
