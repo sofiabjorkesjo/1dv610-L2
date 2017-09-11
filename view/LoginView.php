@@ -23,11 +23,13 @@ class LoginView {
 		$message = "";
 		//$this->submitForm();
 		$response = $this->generateLoginFormHTML($message);
+		//if($this->loggedIn() == true) {
 		if($this->submitForm()){
 			$message = "Welcome";
+			$response = $this->generateLogoutButtonHTML($message);	
+		} else if($this->loggedIn()){
 			$response = $this->generateLogoutButtonHTML($message);
-			
-		} 
+		}
 		return $response;
 	}
 
@@ -107,16 +109,26 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword())
-				echo $_SESSION["username"];
-				$_SESSION["username"] = $this->getRequestUserName();
-				$_SESSION["password"] = $this->getRequestPassword();
+			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
 				var_dump($_SESSION);
 				return true;
 			}else{
 				return false;
 			}
 		} 
+	}
+
+	//inloggad sålänge sessionen finns
+
+	public function loggedIn(){
+			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
+				//vara inloggad
+				return true;
+			} else {
+				//ej inloggad
+				return false;
+			}		
+	}	
 	}
 	
 
