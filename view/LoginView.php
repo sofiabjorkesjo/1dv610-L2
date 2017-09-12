@@ -36,6 +36,9 @@ class LoginView {
 		} else if($this->checkPasswordField()){
 			$message = "Password is missing";
 			$response = $this->generateLoginFormHTML($message);	
+		} else if($this->checkUsernameAndPassword()){
+			$message = "Wrong username or password";
+			$response = $this->generateLoginFormHTML($message);	
 		}
 		return $response;
 	}
@@ -142,13 +145,6 @@ class LoginView {
 			}		
 	}	
 
-	// public function notLoggedIn(){
-		
-	// 		$message = "Username is missing";
-	// 		return $message;
-	// 		echo "a";
-		
-	// }
 
 	public function checkFields(){
 		if(isset($_POST[self::$login])){
@@ -159,13 +155,23 @@ class LoginView {
 	}
 
 
-
+	//Fixa så admin står kvar
 	public function checkPasswordField() {
 		if(isset($_POST[self::$login])){
 			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == ""){
 				//$a = $_POST[self::$usernameValue] = $_SESSION['username'];
 				return true;
 				
+			}
+		}
+	}
+
+	//fixa så admin står kvar
+	public function checkUsernameAndPassword(){
+		if(isset($_POST[self::$login])){
+			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() !== $this->setCorrectPassword()||
+			$this->getRequestUserName() !== $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
+				return true;
 			}
 		}
 	}
