@@ -29,7 +29,14 @@ class LoginView {
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->loggedIn()){
 			$response = $this->generateLogoutButtonHTML($message);
+		} else if($this->checkLogIn()){
+			$message = "Username is missing";
+			$response = $this->generateLoginFormHTML($message);
 		}
+		// } else if($this->submitForm() == false ){
+		// 	$this->notLoggedIn();
+		// 	$message = "jj";
+		// }
 		return $response;
 	}
 
@@ -110,10 +117,11 @@ class LoginView {
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
 			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
-				var_dump($_SESSION);
+				//var_dump($_SESSION);
 				return true;
 			}else{
 				return false;
+
 			}
 		} 
 	}
@@ -129,6 +137,22 @@ class LoginView {
 				return false;
 			}		
 	}	
+
+	// public function notLoggedIn(){
+		
+	// 		$message = "Username is missing";
+	// 		return $message;
+	// 		echo "a";
+		
+	// }
+
+	public function checkLogIn(){
+		if(isset($_POST[self::$login])){
+			if($this->getRequestUserName() == "" && $this->getRequestPassword() == ""){
+				return true;
+			}
+		}
+	}
 	}
 	
 

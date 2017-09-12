@@ -21,6 +21,8 @@ $lv = new LayoutView();
 
 if($v->submitForm() == true){
     $lv->render(true, $v, $dtv);
+}else if($v->loggedIn() == true){
+    $lv->render(true, $v, $dtv);
 }else{
     $lv->render(false, $v, $dtv);
 }
