@@ -16,7 +16,9 @@ $lv = new LayoutView();
 
 
     session_start();
-
+if(isset($_POST['LoginView::Logout'])){
+    session_unset();
+}
 
 
 if($v->submitForm()){
