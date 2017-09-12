@@ -8,7 +8,8 @@ class LoginView {
 	private static $cookieName = 'LoginView::CookieName';
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
-	private static $messageId = 'LoginView::Message';	
+	private static $messageId = 'LoginView::Message';
+	private static $usernameValue = "";	
 
 	
 	
@@ -29,14 +30,13 @@ class LoginView {
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->loggedIn()){
 			$response = $this->generateLogoutButtonHTML($message);
-		} else if($this->checkLogIn()){
+		} else if($this->checkFields()){
 			$message = "Username is missing";
 			$response = $this->generateLoginFormHTML($message);
+		} else if($this->checkPasswordField()){
+			$message = "Password is missing";
+			$response = $this->generateLoginFormHTML($message);	
 		}
-		// } else if($this->submitForm() == false ){
-		// 	$this->notLoggedIn();
-		// 	$message = "jj";
-		// }
 		return $response;
 	}
 
@@ -68,7 +68,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$usernameValue .'" />
 					
 
 					<label for="' . self::$password . '">Password :</label>
@@ -116,8 +116,10 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
+			if($this->getRequestUserName() == "Admin" && $this->getRequestPassword() == "Password"){
 				//var_dump($_SESSION);
+				$_SESSION["username"] = $this->getRequestUserName();
+				$_SESSION["password"] = $this->getRequestPassword();
 				return true;
 			}else{
 				return false;
@@ -131,6 +133,8 @@ class LoginView {
 	public function loggedIn(){
 			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
 				//vara inloggad
+				echo "aa";
+				
 				return true;
 			} else {
 				//ej inloggad
@@ -146,13 +150,27 @@ class LoginView {
 		
 	// }
 
-	public function checkLogIn(){
+	public function checkFields(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == "" && $this->getRequestPassword() == ""){
+			if($this->getRequestUserName() == "" && $this->getRequestPassword() == "" || $this->getRequestUserName() == "" && $this->getRequestPassword() == "Password"){
 				return true;
 			}
 		}
 	}
+
+
+
+	public function checkPasswordField() {
+		if(isset($_POST[self::$login])){
+			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == ""){
+				//$a = $_POST[self::$usernameValue] = $_SESSION['username'];
+				return true;
+				
+			}
+		}
+	}
+
+
 	}
 	
 
