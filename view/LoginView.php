@@ -25,11 +25,17 @@ class LoginView {
 		//$this->submitForm();
 		$response = $this->generateLoginFormHTML($message);
 		//if($this->loggedIn() == true) {
-		if($this->submitForm()){
+		if($this->loggedIn()){
 			$message = "Welcome";
-			$response = $this->generateLogoutButtonHTML($message);	
-		} else if($this->loggedIn()){
 			$response = $this->generateLogoutButtonHTML($message);
+			// if(isset($_SESSION["username"])){
+			// 	$this->logOut();
+			// }
+			
+			$this->logOut();
+		//} else if($this->loggedIn()){
+		//	$response = $this->generateLogoutButtonHTML($message);
+			//$this->logOut();
 		} else if($this->checkFields()){
 			$message = "Username is missing";
 			$response = $this->generateLoginFormHTML($message);
@@ -39,8 +45,10 @@ class LoginView {
 		} else if($this->checkUsernameAndPassword()){
 			$message = "Wrong username or password";
 			$response = $this->generateLoginFormHTML($message);	
-		}
+		} 
 		return $response;
+
+		
 	}
 
 	/**
@@ -123,9 +131,11 @@ class LoginView {
 				//var_dump($_SESSION);
 				$_SESSION["username"] = $this->getRequestUserName();
 				$_SESSION["password"] = $this->getRequestPassword();
-				return true;
-			}else{
-				return false;
+				//$this->logOut();
+				$this->loggedIn();
+				//return true;
+			//}else{
+			//	return false;
 
 			}
 		} 
@@ -137,7 +147,6 @@ class LoginView {
 			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
 				//vara inloggad
 				echo "aa";
-				
 				return true;
 			} else {
 				//ej inloggad
@@ -173,6 +182,14 @@ class LoginView {
 			$this->getRequestUserName() !== $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
 				return true;
 			}
+		}
+	}
+
+	public function logOut(){
+		
+		if (isset($_POST[self::$logout])){
+			//echo "jajaja";
+			session_destroy();
 		}
 	}
 
