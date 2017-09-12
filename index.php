@@ -15,19 +15,20 @@ $dtv = new DateTimeView();
 $lv = new LayoutView();
 
 
-    session_start();
+session_start();
 if(isset($_POST['LoginView::Logout'])){
     session_unset();
+   
 }
 
 
 if($v->submitForm()){
     $lv->render(true, $v, $dtv);
-}else if($v->loggedIn() == true){
+}else if($v->loggedIn()){
     $lv->render(true, $v, $dtv);
 }else{
     $lv->render(false, $v, $dtv);
 }
 
-// $lv->render(false, $v, $dtv);
+
 

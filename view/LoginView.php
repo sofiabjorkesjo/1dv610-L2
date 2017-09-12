@@ -22,18 +22,13 @@ class LoginView {
 	 */
 	public function response() {
 		$message = "";
-		//$this->submitForm();
 		$response = $this->generateLoginFormHTML($message);
-		//if($this->loggedIn() == true) {
-		if($this->loggedIn()){
+
+		if($this->submitForm()){
 			$message = "Welcome";
-			$response = $this->generateLogoutButtonHTML($message);
-			
-			
-		
-		//} else if($this->loggedIn()){
-		//	$response = $this->generateLogoutButtonHTML($message);
-			
+			$response = $this->generateLogoutButtonHTML($message);	
+		} else if($this->loggedIn()){
+			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->checkFields()){
 			$message = "Username is missing";
 			$response = $this->generateLoginFormHTML($message);
@@ -41,9 +36,12 @@ class LoginView {
 			$message = "Password is missing";
 			$response = $this->generateLoginFormHTML($message);	
 		} else if($this->checkUsernameAndPassword()){
-			$message = "Wrong username or password";
+			$message = "Wrong name or password";
 			$response = $this->generateLoginFormHTML($message);	
-		} 
+		} else if(isset($_POST['LoginView::Logout'])) {
+			$message = "Bye bye!";
+			$response = $this->generateLoginFormHTML($message);	
+		}
 		return $response;
 
 		
@@ -108,15 +106,20 @@ class LoginView {
 		return $password;
 	}
 	
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
+	//hämtar det username som användaren skriver in
+	private function getUsername() {
 		$username = (isset($_POST[self::$name]) ? $_POST[self::$name] : null);
 		return $username;
+	}
+
+	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
+	private function getRequestUserName() {
+		//hämta value i input username
 
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
 
-	private function getRequestPassword(){
+	private function getPassword(){
 		$password = $_POST[self::$password];
 		return $password;
 	}
@@ -125,15 +128,13 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == "Admin" && $this->getRequestPassword() == "Password"){
+			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				//var_dump($_SESSION);
-				$_SESSION["username"] = $this->getRequestUserName();
-				$_SESSION["password"] = $this->getRequestPassword();
-				//$this->logOut();
-				$this->loggedIn();
-				//return true;
-			//}else{
-			//	return false;
+				$_SESSION["username"] = $this->getUsername();
+				$_SESSION["password"] = $this->getPassword();
+				return true;
+			}else{
+				return false;
 
 			}
 		} 
@@ -152,7 +153,7 @@ class LoginView {
 
 	public function checkFields(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == "" && $this->getRequestPassword() == "" || $this->getRequestUserName() == "" && $this->getRequestPassword() == "Password"){
+			if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
 				return true;
 			}
 		}
@@ -162,7 +163,7 @@ class LoginView {
 	//Fixa så admin står kvar
 	public function checkPasswordField() {
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() == ""){
+			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
 				//$a = $_POST[self::$usernameValue] = $_SESSION['username'];
 				return true;
 				
@@ -173,8 +174,8 @@ class LoginView {
 	//fixa så admin står kvar
 	public function checkUsernameAndPassword(){
 		if(isset($_POST[self::$login])){
-			if($this->getRequestUserName() == $this->setCorrectUsername() && $this->getRequestPassword() !== $this->setCorrectPassword()||
-			$this->getRequestUserName() !== $this->setCorrectUsername() && $this->getRequestPassword() == $this->setCorrectPassword()){
+			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
+			$this->getUsername() !== $this->setCorrectUsername() && $this->getPassword() == $this->setCorrectPassword()){
 				return true;
 			}
 		}
