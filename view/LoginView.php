@@ -23,9 +23,12 @@ class LoginView {
 	public function response() {
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
-
+		
 		if($this->submitForm()){
-			$message = "Welcome";
+			if(!isset($_SESSION["loggedIn"])){
+				$message = "Welcome";
+				$_SESSION["loggedIn"] = $message;
+			}	
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->loggedIn()){
 			$response = $this->generateLogoutButtonHTML($message);	
@@ -143,6 +146,7 @@ class LoginView {
 
 	public function loggedIn(){
 			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
+				
 				return true;
 			} else {
 				return false;
@@ -179,6 +183,7 @@ class LoginView {
 		if(isset($_POST[self::$login])){
 			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
 			$this->getUsername() !== $this->setCorrectUsername() && $this->getPassword() == $this->setCorrectPassword()){
+				$this->getRequestUserName();
 				return true;
 			}
 		}
