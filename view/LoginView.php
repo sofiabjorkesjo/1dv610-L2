@@ -9,7 +9,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	private static $usernameValue = "";	
+	public static $usernameValue = '';
 
 	
 	
@@ -75,7 +75,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$usernameValue .'" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$usernameValue . '" />
 					
 
 					<label for="' . self::$password . '">Password :</label>
@@ -113,10 +113,9 @@ class LoginView {
 	}
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//hämta value i input username
-
-		//RETURN REQUEST VARIABLE: USERNAME
+	private function getRequestUserName() {	
+		$value = $_POST[self::$name];
+		return self::$usernameValue = $value;
 	}
 
 	private function getPassword(){
@@ -165,6 +164,10 @@ class LoginView {
 		if(isset($_POST[self::$login])){
 			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
 				//$a = $_POST[self::$usernameValue] = $_SESSION['username'];
+				//$a = $_GET[self::$test] = $this->getRequestUserName();
+				//echo "jajaja";
+				$this->getRequestUserName();
+				//echo $a;
 				return true;
 				
 			}
