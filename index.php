@@ -16,8 +16,11 @@ $lv = new LayoutView();
 
 
 session_start();
+//$v->loggOut();
 if(isset($_POST['LoginView::Logout'])){
-    session_unset();
+    unset($_SESSION["username"]);
+    unset($_SESSION["password"]);
+    unset($_SESSION["loggedIn"]);
    
 }
 

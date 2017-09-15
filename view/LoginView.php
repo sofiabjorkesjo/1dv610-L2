@@ -29,8 +29,10 @@ class LoginView {
 				$message = "Welcome";
 				$_SESSION["loggedIn"] = $message;
 			}	
+			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->loggedIn()){
+			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->checkFields()){
 			$message = "Username is missing";
@@ -41,13 +43,15 @@ class LoginView {
 		} else if($this->checkUsernameAndPassword()){
 			$message = "Wrong name or password";
 			$response = $this->generateLoginFormHTML($message);	
-		} else if(isset($_POST['LoginView::Logout'])) {
-			$message = "Bye bye!";
-			$response = $this->generateLoginFormHTML($message);	
 		}
-		return $response;
-
-		
+		else if(isset($_POST['LoginView::Logout'])) {
+			if(!isset($_SESSION["loggedOut"])){
+				$message = "Bye bye!";
+				$_SESSION["loggedOut"] = $message;	
+			} 
+			$response = $this->generateLoginFormHTML($message);		
+		}	
+		return $response;	
 	}
 
 	/**
@@ -146,7 +150,6 @@ class LoginView {
 
 	public function loggedIn(){
 			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
-				
 				return true;
 			} else {
 				return false;
@@ -162,23 +165,17 @@ class LoginView {
 		}
 	}
 
-
-	//Fixa så admin står kvar
 	public function checkPasswordField() {
 		if(isset($_POST[self::$login])){
 			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
-				//$a = $_POST[self::$usernameValue] = $_SESSION['username'];
-				//$a = $_GET[self::$test] = $this->getRequestUserName();
-				//echo "jajaja";
 				$this->getRequestUserName();
-				//echo $a;
 				return true;
 				
 			}
 		}
 	}
 
-	//fixa så admin står kvar
+
 	public function checkUsernameAndPassword(){
 		if(isset($_POST[self::$login])){
 			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
@@ -188,6 +185,20 @@ class LoginView {
 			}
 		}
 	}
+
+	// public function loggOut(){
+	// 	if(isset($_POST['LoginView::Logout'])){
+	// 		echo "utloggad";
+	// 		if(!isset($_SESSION['a'])){
+	// 			echo "aa";
+	// 			$message = "hej";
+	// 			$_SESSION['a'] = $message;
+	// 			$this->generateLoginFormHTML($message);
+	// 		}
+	// 		return session_unset($_SESSION['username']);
+		   
+	// 	}
+	// }
 
 
 	}
