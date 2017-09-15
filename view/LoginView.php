@@ -50,7 +50,11 @@ class LoginView {
 				$_SESSION["loggedOut"] = $message;	
 			} 
 			$response = $this->generateLoginFormHTML($message);		
-		}	
+		} else if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
+			echo "cookie works";
+			$message = "Welcome back with cookie";
+			$response = $this->generateLogoutButtonHTML($message);
+		}
 		return $response;	
 	}
 
@@ -134,6 +138,7 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
+			$this->logInCookie();
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				//var_dump($_SESSION);
 				$_SESSION["username"] = $this->getUsername();
@@ -186,19 +191,32 @@ class LoginView {
 		}
 	}
 
-	// public function loggOut(){
-	// 	if(isset($_POST['LoginView::Logout'])){
-	// 		echo "utloggad";
-	// 		if(!isset($_SESSION['a'])){
-	// 			echo "aa";
-	// 			$message = "hej";
-	// 			$_SESSION['a'] = $message;
-	// 			$this->generateLoginFormHTML($message);
-	// 		}
-	// 		return session_unset($_SESSION['username']);
-		   
-	// 	}
-	// }
+	public function logInCookie(){
+		
+		if(!isset($_COOKIE["LoginView::CookieName"])){
+			$cookie_name = "LoginView::CookieName";
+			$cookie_value = "Admin";
+			setcookie($cookie_name, $cookie_value, time() + 12360, "/");
+			//$cookie_name_password = "password2";
+			//$cookie_value_password = "Password";
+			//setcookie(isset($cookie_name_password), $cookie_value_password, time() + 12360, "/");
+			echo "testtttt ";
+			echo $_COOKIE["LoginView::CookieName"];
+			//return $_COOKIE["LoginView::CookieName"];
+		} 
+		else if (!isset($_COOKIE["LoginView::CookiePassword"])){
+			$name = "LoginView::CookiePassword";
+			$value = "Password";
+			setcookie($name, $value, time() + 12360, "/");
+			echo "lösen";
+			echo $_COOKIE["LoginView::CookiePassword"];
+		} 
+		else {
+			echo "already set";
+		}
+		
+
+	}
 
 
 	}

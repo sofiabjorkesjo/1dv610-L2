@@ -29,7 +29,9 @@ if($v->submitForm()){
     $lv->render(true, $v, $dtv);
 }else if($v->loggedIn()){
     $lv->render(true, $v, $dtv);
-}else{
+} else if(isset($_COOKIE["LoginView::CookieName"])){
+    $lv->render(true, $v, $dtv);
+} else{
     $lv->render(false, $v, $dtv);
 }
 
