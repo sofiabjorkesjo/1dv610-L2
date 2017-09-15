@@ -16,22 +16,26 @@ $lv = new LayoutView();
 
 
 session_start();
-//$v->loggOut();
+
+if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {    
+    $message = "Welcome back with cookie";
+    $_SESSION["cookiesMessage"] = $message;
+}
+
 if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["username"]);
     unset($_SESSION["password"]);
     unset($_SESSION["loggedIn"]);
-   
+    unset($_SESSION["cookiesMessage"]); 
 }
-
 
 if($v->submitForm()){
     $lv->render(true, $v, $dtv);
 }else if($v->loggedIn()){
     $lv->render(true, $v, $dtv);
-} else if(isset($_COOKIE["LoginView::CookieName"])){
+} else if(isset($_SESSION["cookiesMessage"]) && isset($_COOKIE["LoginView::CookieName"])){
     $lv->render(true, $v, $dtv);
-} else{
+}else{
     $lv->render(false, $v, $dtv);
 }
 
