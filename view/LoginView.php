@@ -15,6 +15,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	//FIXA
 	public static $usernameValue = '';
 
 	
@@ -26,14 +27,16 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
+
+	
+
+
 	public function response() {
 		$message = "";
+		
+		$this->getLoginModel($message);
 		$response = $this->generateLoginFormHTML($message);
-		if (new LoginModel($message)){
-			echo"Mmmmm";
-			$message = $message;
-			$response = $this->generateLoginFormHTML($message);
-		}
+		
 				
 		
 		if($this->submitForm()){
@@ -46,9 +49,9 @@ class LoginView {
 		} else if($this->loggedIn()){
 			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
-		} else if($this->checkFields()){
-			$message = "Username is missing";
-			$response = $this->generateLoginFormHTML($message);
+		// } else if($this->checkFields()){
+		// 	$message = "Username is missing";
+		// 	$response = $this->generateLoginFormHTML($message);
 		// } else if($this->checkPasswordField()){
 		// 	$message = "Password is missing";
 		// 	$response = $this->generateLoginFormHTML($message);	
@@ -56,9 +59,9 @@ class LoginView {
 		// 	$message = $m;
 		// 	$response = $this->generateLoginFormHTML($message);
 		
-		} else if($this->checkUsernameAndPassword()){
-			$message = "Wrong name or password";
-			$response = $this->generateLoginFormHTML($message);	
+		// } else if($this->checkUsernameAndPassword()){
+		// 	$message = "Wrong name or password";
+		// 	$response = $this->generateLoginFormHTML($message);	
 		}
 		else if(isset($_POST['LoginView::Logout'])) {
 			if(!isset($_SESSION["loggedOut"])){
@@ -73,6 +76,7 @@ class LoginView {
 		return $response;	
 	}
 
+	
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -114,12 +118,16 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
-		
-		//echo $_POST[self::$name];
 	}
 
 	
-	//FÅ IN EN MODELL
+
+
+	public function getLoginModel(&$message){
+		if (isset($_POST['LoginView::Login'])){
+			return new LoginModel($message);
+		}
+	}
 
 	//sätter det rätta användarnamnet och sparar det i en session
 
@@ -141,6 +149,7 @@ class LoginView {
 		return $username;
 	}
 
+	//FIXA
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {	
 		$value = $_POST[self::$name];
@@ -156,11 +165,10 @@ class LoginView {
 
 	public function submitForm(){
 		if(isset($_POST[self::$login])){
-			$this->logInCookie();
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
-				//var_dump($_SESSION);
 				$_SESSION["username"] = $this->getUsername();
 				$_SESSION["password"] = $this->getPassword();
+				$this->logInCookie();
 				return true;
 			}else{
 				return false;
@@ -180,13 +188,13 @@ class LoginView {
 	}	
 
 
-	public function checkFields(){
-		if(isset($_POST[self::$login])){
-			if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
-				return true;
-			}
-		}
-	}
+	// public function checkFields(){
+	// 	if(isset($_POST[self::$login])){
+	// 		if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
+	// 			return true;
+	// 		}
+	// 	}
+	// }
 
 	// public function checkPasswordField() {
 	// 	if(isset($_POST[self::$login])){
@@ -199,15 +207,17 @@ class LoginView {
 	// }
 
 
-	public function checkUsernameAndPassword(){
-		if(isset($_POST[self::$login])){
-			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
-			$this->getUsername() !== $this->setCorrectUsername() && $this->getPassword() == $this->setCorrectPassword()){
-				$this->getRequestUserName();
-				return true;
-			}
-		}
-	}
+	// public function checkUsernameAndPassword(){
+	// 	if(isset($_POST[self::$login])){
+	// 		 if(
+	// 			//$this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
+	// 		$this->getUsername() !== $this->setCorrectUsername() && $this->getPassword() == $this->setCorrectPassword()){
+	// 			$this->getRequestUserName();
+	// 			echo"blä";
+	// 			return true;
+	// 		}
+	// 	}
+	// }
 
 	public function logInCookie(){
 		

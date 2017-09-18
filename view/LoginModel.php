@@ -2,24 +2,31 @@
 
 //gör en konstruktor
 //lägg in alla regler osv här
-//skicka med argument i konstruktorn
 
-//kalla sedan på konstruktorn i loginView, och skapa en new
 class LoginModel{
+    public static $usernameValue = '';
 
     
-    public function __construct($message){
-       // echo "aaa model test";
-        $message = "";
+    public function __construct(&$message){
+       
         if($this->checkPasswordField()){
-			$message = "Password is missing";
-				
-        // } else if($this->checkFields()){
-        //     $message = "Username is missing";
+            $message = "Password is missing";		
+        } else if($this->checkFields()){
+            $message = "Username is missing";
+           
+        } else if ($this->checkUsernameAndPassword()){
+            $message = "Wrong name or password";
+           
         }
         
 
     }
+
+    private function getRequestUserName() {	
+        $value = $_POST['LoginView::UserName'];
+        echo "jjdkjdklsj";
+		return self::$usernameValue = $value;
+	}
 
     //hämtar det username som användaren skriver in
 	private function getUsername() {
@@ -33,26 +40,29 @@ class LoginModel{
 	}
 
     public function checkPasswordField() {
-		if(isset($_POST['LoginView::Login'])){
 			if($this->getUsername() == "Admin" && $this->getPassword() == ""){
-				//$this->getRequestUserName();
 				return true;
-                
-                //FIXA
-
-			// } else if ($this->getUsername() == "a" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
-            //     return true;
-            }
 		}
     }
     
-    // public function checkFields(){
-	// 	if(isset($_POST['LoginView::Login'])){
-	// 		if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
-	// 			return true;
-	// 		}
-	// 	}
-	// }
+    public function checkFields(){
+		
+            if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"
+            ){
+				return true;
+            
+		}
+    }
+    
+    public function checkUsernameAndPassword(){
+			 if($this->getUsername() == "Admin" && $this->getPassword() !== "Password"||
+			    $this->getUsername() !== "Admin" && $this->getPassword() == "Password"){
+                   //FIXA
+				//$this->getRequestUserName();
+			
+				return true;
+			}
+	}
 }
 
 
