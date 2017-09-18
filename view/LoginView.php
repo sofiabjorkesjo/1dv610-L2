@@ -1,6 +1,12 @@
 <?php
+	require_once('view/LoginModel.php');
 
 class LoginView {
+
+	
+
+
+
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
@@ -23,6 +29,12 @@ class LoginView {
 	public function response() {
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
+		if (new LoginModel($message)){
+			echo"Mmmmm";
+			$message = $message;
+			$response = $this->generateLoginFormHTML($message);
+		}
+				
 		
 		if($this->submitForm()){
 			if(!isset($_SESSION["loggedIn"])){
@@ -37,9 +49,13 @@ class LoginView {
 		} else if($this->checkFields()){
 			$message = "Username is missing";
 			$response = $this->generateLoginFormHTML($message);
-		} else if($this->checkPasswordField()){
-			$message = "Password is missing";
-			$response = $this->generateLoginFormHTML($message);	
+		// } else if($this->checkPasswordField()){
+		// 	$message = "Password is missing";
+		// 	$response = $this->generateLoginFormHTML($message);	
+		// }else if(new LoginModel($m)){
+		// 	$message = $m;
+		// 	$response = $this->generateLoginFormHTML($message);
+		
 		} else if($this->checkUsernameAndPassword()){
 			$message = "Wrong name or password";
 			$response = $this->generateLoginFormHTML($message);	
@@ -101,6 +117,9 @@ class LoginView {
 		
 		//echo $_POST[self::$name];
 	}
+
+	
+	//FÅ IN EN MODELL
 
 	//sätter det rätta användarnamnet och sparar det i en session
 
@@ -169,15 +188,15 @@ class LoginView {
 		}
 	}
 
-	public function checkPasswordField() {
-		if(isset($_POST[self::$login])){
-			if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
-				$this->getRequestUserName();
-				return true;
+	// public function checkPasswordField() {
+	// 	if(isset($_POST[self::$login])){
+	// 		if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
+	// 			$this->getRequestUserName();
+	// 			return true;
 				
-			}
-		}
-	}
+	// 		}
+	// 	}
+	// }
 
 
 	public function checkUsernameAndPassword(){
