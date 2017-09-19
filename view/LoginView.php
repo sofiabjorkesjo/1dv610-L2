@@ -17,6 +17,7 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 	//FIXA
 	public static $usernameValue = '';
+	
 
 	
 	
@@ -32,11 +33,12 @@ class LoginView {
 
 
 	public function response() {
+		$_SESSION['usernameValue'] = "";
 		$message = "";
 		
 		$this->getLoginModel($message);
 		$response = $this->generateLoginFormHTML($message);
-		
+	
 				
 		
 		if($this->submitForm()){
@@ -105,7 +107,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$usernameValue . '" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $_SESSION['usernameValue'] . '" />
 					
 
 					<label for="' . self::$password . '">Password :</label>
@@ -151,10 +153,14 @@ class LoginView {
 
 	//FIXA
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {	
-		$value = $_POST[self::$name];
-		return self::$usernameValue = $value;
-	}
+	// private function getRequestUserName() {	
+	// 	$value = $_POST[self::$name];
+	// 	self::$usernameValue = $value;
+	// 	$_SESSION['value'] = self::$usernameValue;
+	// 	return $_SESSION['value'];
+		
+	// }
+
 
 	private function getPassword(){
 		$password = $_POST[self::$password];

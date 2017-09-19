@@ -22,10 +22,8 @@ class LoginModel{
 
     }
 
-    private function getRequestUserName() {	
-        $value = $_POST['LoginView::UserName'];
-        echo "jjdkjdklsj";
-		return self::$usernameValue = $value;
+    private function getRequestUserName() {          
+		return $_SESSION['usernameValue'] = $_POST['LoginView::UserName'];
 	}
 
     //hämtar det username som användaren skriver in
@@ -41,6 +39,7 @@ class LoginModel{
 
     public function checkPasswordField() {
 			if($this->getUsername() == "Admin" && $this->getPassword() == ""){
+                $this->getRequestUserName();
 				return true;
 		}
     }
@@ -57,8 +56,9 @@ class LoginModel{
     public function checkUsernameAndPassword(){
 			 if($this->getUsername() == "Admin" && $this->getPassword() !== "Password"||
 			    $this->getUsername() !== "Admin" && $this->getPassword() == "Password"){
-                   //FIXA
-				//$this->getRequestUserName();
+                $this->getRequestUserName();
+    
+                
 			
 				return true;
 			}

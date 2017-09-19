@@ -32,6 +32,7 @@ if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["password"]);
     unset($_SESSION["loggedIn"]);
     unset($_SESSION["cookiesMessage"]); 
+    unset($_SESSION["usernameValue"]);
 }
 
 if($v->submitForm()){
