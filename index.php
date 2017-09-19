@@ -35,9 +35,10 @@ if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["usernameValue"]);
 }
 
-if($v->submitForm()){
-    $lv->render(true, $v, $dtv);
-}else if($v->loggedIn()){
+// if($v->submitForm()){
+//     $lv->render(true, $v, $dtv);
+// }else 
+if($v->loggedIn()){
     $lv->render(true, $v, $dtv);
 } else if(isset($_SESSION["cookiesMessage"]) && isset($_COOKIE["LoginView::CookieName"])){
     $lv->render(true, $v, $dtv);

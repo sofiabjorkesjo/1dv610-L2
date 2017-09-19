@@ -3,7 +3,7 @@
 //gör en konstruktor
 //lägg in alla regler osv här
 
-class LoginModel{
+class checkFieldsModel{
     
     public function __construct(&$message){
         if($this->checkPasswordField()){

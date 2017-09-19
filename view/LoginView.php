@@ -36,12 +36,12 @@ class LoginView {
 		$_SESSION['usernameValue'] = "";
 		$message = "";
 		
-		$this->getLoginModel($message);
+		$this->getCheckFieldsModel($message);
 		$response = $this->generateLoginFormHTML($message);
-	
-		new loggedInModel();
-		
-		if($this->submitForm()){
+		$this->getLoggedinModel($message);
+		$response = $this->generateLogoutButtonHTML($message);
+
+	/* 	if($this->submitForm()){
 			if(!isset($_SESSION["loggedIn"])){
 				$message = "Welcome";
 				$_SESSION["loggedIn"] = $message;
@@ -49,11 +49,13 @@ class LoginView {
 			}	
 			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
-		} else if($this->loggedIn()){
-			unset($_SESSION["loggedOut"]);
-			$response = $this->generateLogoutButtonHTML($message);	
-		}
-		else if(isset($_POST['LoginView::Logout'])) {
+		} else  */
+		// if($this->loggedIn()){
+		// 	unset($_SESSION["loggedOut"]);
+		// 	$response = $this->generateLogoutButtonHTML($message);	
+		// }
+		// else 
+		if(isset($_POST['LoginView::Logout'])) {
 			if(!isset($_SESSION["loggedOut"])){
 				$message = "Bye bye!";
 				$_SESSION["loggedOut"] = $message;	
@@ -113,9 +115,15 @@ class LoginView {
 	
 
 
-	public function getLoginModel(&$message){
+	public function getCheckFieldsModel(&$message){
 		if (isset($_POST['LoginView::Login'])){
-			return new LoginModel($message);
+			return new checkFieldsModel($message);
+		}
+	}
+
+	public function getLoggedinModel(&$message){
+		if (isset($_POST['LoginView::Login'])){
+			return new loggedInModel($message);
 		}
 	}
 
@@ -148,19 +156,19 @@ class LoginView {
 
 	//när man klickar på submit, kollar username och password
 
-	public function submitForm(){
-		if(isset($_POST[self::$login])){
-			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
-				$_SESSION["username"] = $this->getUsername();
-				$_SESSION["password"] = $this->getPassword();
-				$this->logInCookie();
-				return true;
-			}else{
-				return false;
+	// public function submitForm(){
+	// 	if(isset($_POST[self::$login])){
+	// 		if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
+	// 			$_SESSION["username"] = $this->getUsername();
+	// 			$_SESSION["password"] = $this->getPassword();
+	// 			$this->logInCookie();
+	// 			return true;
+	// 		}else{
+	// 			return false;
 
-			}
-		} 
-	}
+	// 		}
+	// 	} 
+	// }
 
 	//inloggad sålänge sessionen finns
 
