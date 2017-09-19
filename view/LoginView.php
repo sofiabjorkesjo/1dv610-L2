@@ -1,5 +1,6 @@
 <?php
-	require_once('view/LoginModel.php');
+	require_once('model/checkFieldsModel.php');
+	require_once('model/loggedInModel.php');
 
 class LoginView {
 
@@ -15,8 +16,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	//FIXA
-	public static $usernameValue = '';
+
 	
 
 	
@@ -39,31 +39,19 @@ class LoginView {
 		$this->getLoginModel($message);
 		$response = $this->generateLoginFormHTML($message);
 	
-				
+		new loggedInModel();
 		
 		if($this->submitForm()){
 			if(!isset($_SESSION["loggedIn"])){
 				$message = "Welcome";
 				$_SESSION["loggedIn"] = $message;
+				
 			}	
 			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
 		} else if($this->loggedIn()){
 			unset($_SESSION["loggedOut"]);
 			$response = $this->generateLogoutButtonHTML($message);	
-		// } else if($this->checkFields()){
-		// 	$message = "Username is missing";
-		// 	$response = $this->generateLoginFormHTML($message);
-		// } else if($this->checkPasswordField()){
-		// 	$message = "Password is missing";
-		// 	$response = $this->generateLoginFormHTML($message);	
-		// }else if(new LoginModel($m)){
-		// 	$message = $m;
-		// 	$response = $this->generateLoginFormHTML($message);
-		
-		// } else if($this->checkUsernameAndPassword()){
-		// 	$message = "Wrong name or password";
-		// 	$response = $this->generateLoginFormHTML($message);	
 		}
 		else if(isset($_POST['LoginView::Logout'])) {
 			if(!isset($_SESSION["loggedOut"])){
@@ -151,15 +139,6 @@ class LoginView {
 		return $username;
 	}
 
-	//FIXA
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	// private function getRequestUserName() {	
-	// 	$value = $_POST[self::$name];
-	// 	self::$usernameValue = $value;
-	// 	$_SESSION['value'] = self::$usernameValue;
-	// 	return $_SESSION['value'];
-		
-	// }
 
 
 	private function getPassword(){
@@ -192,38 +171,6 @@ class LoginView {
 				return false;
 			}		
 	}	
-
-
-	// public function checkFields(){
-	// 	if(isset($_POST[self::$login])){
-	// 		if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"){
-	// 			return true;
-	// 		}
-	// 	}
-	// }
-
-	// public function checkPasswordField() {
-	// 	if(isset($_POST[self::$login])){
-	// 		if($this->getUsername() == $this->setCorrectUsername() && $this->getPassword() == ""){
-	// 			$this->getRequestUserName();
-	// 			return true;
-				
-	// 		}
-	// 	}
-	// }
-
-
-	// public function checkUsernameAndPassword(){
-	// 	if(isset($_POST[self::$login])){
-	// 		 if(
-	// 			//$this->getUsername() == $this->setCorrectUsername() && $this->getPassword() !== $this->setCorrectPassword()||
-	// 		$this->getUsername() !== $this->setCorrectUsername() && $this->getPassword() == $this->setCorrectPassword()){
-	// 			$this->getRequestUserName();
-	// 			echo"blä";
-	// 			return true;
-	// 		}
-	// 	}
-	// }
 
 	public function logInCookie(){
 		

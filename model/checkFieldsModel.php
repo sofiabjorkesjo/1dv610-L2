@@ -4,11 +4,8 @@
 //lägg in alla regler osv här
 
 class LoginModel{
-    public static $usernameValue = '';
-
     
     public function __construct(&$message){
-       
         if($this->checkPasswordField()){
             $message = "Password is missing";		
         } else if($this->checkFields()){
