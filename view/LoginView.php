@@ -42,20 +42,17 @@ class LoginView {
 		new loggedInModel($message);
 		new loggedOutModel($message);
 		//$response = $this->generateLoginFormHTML($message);
-		 if (!isset($_SESSION["checkFields"])){
-			echo "finns ej";
-			$response = $this->generateLoginFormHTML($message);
-		} else if ($_SESSION["checkFields"]){
+		 if (isset($_SESSION["checkFields"])){
 			echo "finns hääär";
 			$response = $this->generateLoginFormHTML($message);
 		}  
 		
-		if ($_SESSION["test"]){
-			echo "ajajjaja";
+		if (isset($_SESSION["test"])){
+			//echo "ajajjaja";
 			$response = $this->generateLogoutButtonHTML($message);
 		} 
 
-		if ($_SESSION["a"]){
+		if (isset($_SESSION["a"])){
 			echo "ss";
 			$response = $this->generateLoginFormHTML($message);
 		}
@@ -119,13 +116,13 @@ class LoginView {
 		// }
 		//  else 
 		// // else 
-		if(isset($_POST['LoginView::Logout'])) {
-			if(!isset($_SESSION["loggedOut"])){
-				$message = "Bye bye!";
-				$_SESSION["loggedOut"] = $message;	
-			} 
-		 	$response = $this->generateLoginFormHTML($message);		
-		} else 
+		// if(isset($_POST['LoginView::Logout'])) {
+		// 	if(!isset($_SESSION["loggedOut"])){
+		// 		$message = "Bye bye!";
+		// 		$_SESSION["loggedOut"] = $message;	
+		// 	} 
+		//  	$response = $this->generateLoginFormHTML($message);		
+		// } else 
 		if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
 			$message = $_SESSION["cookiesMessage"];
 			$response = $this->generateLogoutButtonHTML($message);
@@ -177,80 +174,60 @@ class LoginView {
 		';
 	}
 
-	
-
-
-	// public function getCheckFieldsModel(&$message){
-	// 	if (isset($_POST['LoginView::Login'])){
-	// 		return new checkFieldsModel($message);
-	// 	}
-	// }
-
-	public function getLoggedinModel(&$message){
-		if (isset($_POST['LoginView::Login'])){
-			return new loggedInModel($message);
-		}
-	}
-
-	public function getLoggedOutModel(&$message){
-		if(isset($_POST['LoginView::Logout'])) {
-			return new loggedOutModel($message);
-		}
-	}
 
 	//sätter det rätta användarnamnet och sparar det i en session
 
-	private function setCorrectUsername(){
-		$username = $_SESSION["username"] = "Admin";
-		return $username;
-	}
+	// private function setCorrectUsername(){
+	// 	$username = $_SESSION["username"] = "Admin";
+	// 	return $username;
+	// }
 
-	//sätter det rätta lösenordet och sparar det i en session
+	// //sätter det rätta lösenordet och sparar det i en session
 
-	private function setCorrectPassword(){
-		$password = $_SESSION["password"] = "Password";
-		return $password;
-	}
+	// private function setCorrectPassword(){
+	// 	$password = $_SESSION["password"] = "Password";
+	// 	return $password;
+	// }
 	
-	//hämtar det username som användaren skriver in
-	private function getUsername() {
-		$username = (isset($_POST[self::$name]) ? $_POST[self::$name] : null);
-		return $username;
-	}
+	// //hämtar det username som användaren skriver in
+	// private function getUsername() {
+	// 	$username = (isset($_POST[self::$name]) ? $_POST[self::$name] : null);
+	// 	return $username;
+	// }
 
 
 
-	private function getPassword(){
-		$password = $_POST[self::$password];
-		return $password;
-	}
+	// private function getPassword(){
+	// 	$password = $_POST[self::$password];
+	// 	return $password;
+	// }
 
 	//när man klickar på submit, kollar username och password
 
-	public function submitForm(){
-		if(isset($_POST[self::$login])){
-			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
-				$_SESSION["username"] = $this->getUsername();
-				$_SESSION["password"] = $this->getPassword();
-				$this->logInCookie();
-				return true;
-			}else{
-				return false;
+	// public function submitForm(){
+	// 	if(isset($_POST[self::$login])){
+	// 		if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
+	// 			$_SESSION["username"] = $this->getUsername();
+	// 			$_SESSION["password"] = $this->getPassword();
+	// 			$this->logInCookie();
+	// 			return true;
+	// 		}else{
+	// 			return false;
 
-			}
-		} 
-	}
+	// 		}
+	// 	} 
+	// }
 
 //inloggad sålänge sessionen finns
 
-	public function loggedIn(){
-			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
-				echo "ahhaha2";
-				return true;
-			} else {
-				return false;
-			}		
-	}	
+	// public function loggedIn(){
+	// 		if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
+	// 			echo "ahhaha2";
+	// 			return true;
+	// 		} else {
+	// 			return false;
+	// 		}		
+	// }	
 
 	public function logInCookie(){
 		

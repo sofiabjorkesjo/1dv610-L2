@@ -12,7 +12,7 @@ class checkFieldsModel{
         if($this->checkPasswordField()){
             $message = "Password is missing";
             if (!$_SESSION["checkFields"]){
-                echo "ja1";
+               
                 $_SESSION["checkFields"] = "hej";
             }
             // if($_SESSION["checkFields"]){
@@ -22,7 +22,7 @@ class checkFieldsModel{
         } else if($this->checkFields()){
             $message = "Username is missing";
             if (!$_SESSION["checkFields"]){
-                echo "ja2";
+               
                 $_SESSION["checkFields"] = "hej";
             }
            // $_SESSION["checkFields"] = $message;
@@ -33,9 +33,9 @@ class checkFieldsModel{
        //$_SESSION["checkFields"] = $message;
         } else if ($this->checkUsernameAndPassword()){
             $message = "Wrong name or password22";
-            echo "hej";	
+           	
             if (!$_SESSION["checkFields"]){
-                echo "ja3";
+               
                 $_SESSION["checkFields"] = "hej";
             }
             // if($_SESSION["checkFields"]){

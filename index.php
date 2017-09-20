@@ -33,6 +33,7 @@ if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["loggedIn"]);
     unset($_SESSION["cookiesMessage"]); 
     unset($_SESSION["usernameValue"]);
+    unset($_SESSION["test"]);
 }
 
 

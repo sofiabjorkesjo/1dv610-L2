@@ -8,7 +8,7 @@ class loggedOutModel{
 				$_SESSION["loggedOut"] = $message;	
 			} 
 			if (!$_SESSION["a"]){
-                echo "ja3dd";
+              
                 $_SESSION["a"] = "hej";
             }
 			
