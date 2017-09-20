@@ -11,18 +11,15 @@ class checkFieldsModel{
         if (isset($_POST['LoginView::Login'])){
         if($this->checkPasswordField()){
             $message = "Password is missing";
-            if (!isset($_SESSION["checkFields"])){
-               
+            if (!isset($_SESSION["checkFields"])){  
                 $_SESSION["checkFields"] = $message;;
             }
-       
         } else if($this->checkFields()){
             $message = "Username is missing";
             if (!isset($_SESSION["checkFields"])){
                
                 $_SESSION["checkFields"] = $message;;
             }
-    
         } else if ($this->checkUsernameAndPassword()){
             $message = "Wrong name or password";
            	

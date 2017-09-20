@@ -2,10 +2,8 @@
 
 class loggedInModel{
     public function __construct(&$message){
-       // if (isset($_POST['LoginView::Login'])){
         if($this->submitForm()){
 			unset($_SESSION["checkFields"]);
-			unset($_SESSION["renderLoggedOut"]);
 			unset($_SESSION["loggedOut"]);
             if(!isset($_SESSION["loggedIn"])){
 				$message = "Welcome";	
@@ -13,14 +11,12 @@ class loggedInModel{
 			}	else {
 				$message = "";
 			}
-			if (!isset($_SESSION["renderLoggedIn"])){
-                $_SESSION["renderLoggedIn"] = $message;
-            }
         } else if($this->loggedIn()){
 			 unset($_SESSION["loggedOut"]);
 			 unset($_SESSION["checkFields"]);
-			 if (!$_SESSION["renderLoggedIn"]){
-                $_SESSION["renderLoggedIn"] = $message;
+			 if (!$_SESSION["loggedIn"]){
+				$message = "";
+                $_SESSION["loggedIn"] = $message;
             }
 
        

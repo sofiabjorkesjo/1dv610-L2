@@ -4,6 +4,7 @@
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('model/loggedInModel.php');
 
 //require_once('view/LoginModel.php');
 
@@ -16,6 +17,7 @@ ini_set('display_errors', 'On');
 $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
+$a = new loggedInModel($message);
 
 
 
@@ -27,15 +29,23 @@ if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_CO
     $_SESSION["cookiesMessage"] = $message;
 }
 
+
+
 if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["username"]);
     unset($_SESSION["password"]);
     unset($_SESSION["loggedIn"]);
     unset($_SESSION["cookiesMessage"]); 
     unset($_SESSION["usernameValue"]);
-    unset($_SESSION["renderLoggedIn"]);
+   // unset($_SESSION["renderLoggedIn"]);
 }
 
+if($a->submitForm()){
+    
+    $lv->render(true, $v, $dtv);
+} else {
+    $lv->render(false, $v, $dtv);
+}
 
 // if($v->submitForm()){
 //     $lv->render(true, $v, $dtv);
@@ -43,11 +53,11 @@ if(isset($_POST['LoginView::Logout'])){
 // if($v->loggedIn()){
 //     $lv->render(true, $v, $dtv);
 // } else 
-if(isset($_SESSION["cookiesMessage"]) && isset($_COOKIE["LoginView::CookieName"])){
-    $lv->render(true, $v, $dtv);
-}else{
-    $lv->render(false, $v, $dtv);
-}
+// if(isset($_SESSION["cookiesMessage"]) && isset($_COOKIE["LoginView::CookieName"])){
+//     $lv->render(true, $v, $dtv);
+// }else{
+//     $lv->render(false, $v, $dtv);
+// }
 
 
 

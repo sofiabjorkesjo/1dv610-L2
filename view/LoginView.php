@@ -46,11 +46,11 @@ class LoginView {
 			$response = $this->generateLoginFormHTML($message);
 		}  
 		
-		if (isset($_SESSION["renderLoggedIn"])){
+		if (isset($_SESSION["loggedIn"])){
 			$response = $this->generateLogoutButtonHTML($message);
 		} 
 
-		if (isset($_SESSION["renderLoggedOut"])){
+		if (isset($_SESSION["loggedOut"])){
 			$response = $this->generateLoginFormHTML($message);
 		}
 

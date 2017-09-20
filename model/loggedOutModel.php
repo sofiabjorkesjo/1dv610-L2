@@ -6,12 +6,9 @@ class loggedOutModel{
 			if(!isset($_SESSION["loggedOut"])){
 				$message = "Bye bye!";
 				$_SESSION["loggedOut"] = $message;	
-			} 
-			if (!isset($_SESSION["renderLoggedOut"])){
-                $_SESSION["renderLoggedOut"] = $message;;
-            }
-			
-			
+			} else {
+				$message = "";
+			}		
         }
 }
 }
