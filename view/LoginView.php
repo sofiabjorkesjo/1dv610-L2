@@ -41,19 +41,16 @@ class LoginView {
 		new checkFieldsModel($message);
 		new loggedInModel($message);
 		new loggedOutModel($message);
-		//$response = $this->generateLoginFormHTML($message);
+
 		 if (isset($_SESSION["checkFields"])){
-			echo "finns hääär";
 			$response = $this->generateLoginFormHTML($message);
 		}  
 		
-		if (isset($_SESSION["test"])){
-			//echo "ajajjaja";
+		if (isset($_SESSION["renderLoggedIn"])){
 			$response = $this->generateLogoutButtonHTML($message);
 		} 
 
-		if (isset($_SESSION["a"])){
-			echo "ss";
+		if (isset($_SESSION["renderLoggedOut"])){
 			$response = $this->generateLoginFormHTML($message);
 		}
 

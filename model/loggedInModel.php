@@ -5,33 +5,24 @@ class loggedInModel{
        // if (isset($_POST['LoginView::Login'])){
         if($this->submitForm()){
 			unset($_SESSION["checkFields"]);
-			unset($_SESSION["a"]);
-            if(!$_SESSION["loggedIn"]){
-				echo "jo  ";
-				$message = "Welcome";		
-			}	else {
-				echo "m";
-			}
-			var_dump($_SESSION);
-			if (!$_SESSION["test"]){
-                $_SESSION["test"] = "hej";
-            }
+			unset($_SESSION["renderLoggedOut"]);
 			unset($_SESSION["loggedOut"]);
-			//unset($_SESSION["checkFields"]);
-		//}
+            if(!isset($_SESSION["loggedIn"])){
+				$message = "Welcome";	
+				$_SESSION["loggedIn"] = $message;			
+			}	else {
+				$message = "";
+			}
+			if (!isset($_SESSION["renderLoggedIn"])){
+                $_SESSION["renderLoggedIn"] = $message;
+            }
         } else if($this->loggedIn()){
 			 unset($_SESSION["loggedOut"]);
 			 unset($_SESSION["checkFields"]);
-			 if (!$_SESSION["test"]){
-                $_SESSION["test"] = "hej";
+			 if (!$_SESSION["renderLoggedIn"]){
+                $_SESSION["renderLoggedIn"] = $message;
             }
-			// //unset($_SESSION["checkFields"]);
-			// echo "jjjj ";
-			// $message = "";
-			// if($_SESSION["loggedInSession"]){
-            //     echo "ja2";
-            //     unset($_SESSION["loggedInSession"]);
-            // }
+
        
     }
 }
@@ -65,7 +56,6 @@ class loggedInModel{
 
 	public function loggedIn(){
         if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
-			echo "loggedIn!";
             return true;
         } else {
             return false;

@@ -11,42 +11,28 @@ class checkFieldsModel{
         if (isset($_POST['LoginView::Login'])){
         if($this->checkPasswordField()){
             $message = "Password is missing";
-            if (!$_SESSION["checkFields"]){
+            if (!isset($_SESSION["checkFields"])){
                
-                $_SESSION["checkFields"] = "hej";
+                $_SESSION["checkFields"] = $message;;
             }
-            // if($_SESSION["checkFields"]){
-            //     echo "ja1";
-            //     unset($_SESSION["checkFields"]);
-            // }
+       
         } else if($this->checkFields()){
             $message = "Username is missing";
-            if (!$_SESSION["checkFields"]){
+            if (!isset($_SESSION["checkFields"])){
                
-                $_SESSION["checkFields"] = "hej";
+                $_SESSION["checkFields"] = $message;;
             }
-           // $_SESSION["checkFields"] = $message;
-        //    if($_SESSION["checkFields"]){
-        //     echo "ja2";
-        //     unset($_SESSION["checkFields"]);
-        // }
-       //$_SESSION["checkFields"] = $message;
+    
         } else if ($this->checkUsernameAndPassword()){
-            $message = "Wrong name or password22";
+            $message = "Wrong name or password";
            	
-            if (!$_SESSION["checkFields"]){
+            if (!isset($_SESSION["checkFields"])){
                
-                $_SESSION["checkFields"] = "hej";
+                $_SESSION["checkFields"] = $message;;
             }
-            // if($_SESSION["checkFields"]){
-            //     echo "ja2";
-            //     unset($_SESSION["checkFields"]);
-            // } else {
-            //     $_SESSION["checkFields"] = "message";
-            // }
-            
+       
         }
-        return true;
+
     }
     
 
