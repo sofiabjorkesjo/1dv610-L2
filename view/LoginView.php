@@ -1,6 +1,7 @@
 <?php
 	require_once('model/checkFieldsModel.php');
 	require_once('model/loggedInModel.php');
+	require_once('model/loggedOutModel.php');
 
 class LoginView {
 
@@ -35,33 +36,97 @@ class LoginView {
 	public function response() {
 		$_SESSION['usernameValue'] = "";
 		$message = "";
-		
-		$this->getCheckFieldsModel($message);
 		$response = $this->generateLoginFormHTML($message);
-		$this->getLoggedinModel($message);
-		$response = $this->generateLogoutButtonHTML($message);
 
-	/* 	if($this->submitForm()){
-			if(!isset($_SESSION["loggedIn"])){
-				$message = "Welcome";
-				$_SESSION["loggedIn"] = $message;
+		new checkFieldsModel($message);
+		new loggedInModel($message);
+		new loggedOutModel($message);
+		//$response = $this->generateLoginFormHTML($message);
+		 if (!isset($_SESSION["checkFields"])){
+			echo "finns ej";
+			$response = $this->generateLoginFormHTML($message);
+		} else if ($_SESSION["checkFields"]){
+			echo "finns hääär";
+			$response = $this->generateLoginFormHTML($message);
+		}  
+		
+		if ($_SESSION["test"]){
+			echo "ajajjaja";
+			$response = $this->generateLogoutButtonHTML($message);
+		} 
+
+		if ($_SESSION["a"]){
+			echo "ss";
+			$response = $this->generateLoginFormHTML($message);
+		}
+
+		
+		// new loggedInModel($message);
+		// if($_SESSION["loggedInSession"]){
+		// 	echo "hehehe";
+		// 	$response = $this->generateLogoutButtonHTML($message);
+		// }
+		//$a->checkPasswordField();
+		// if(new checkFieldsModel()){
+		// 	echo "ahah";
+		// 	$this->generateLogoutButtonHTML($message);
+		// }
+
+		//$checkFieldsModel = new checkFieldsModel($message);
+		//$checkFieldsModel->$this->checkPasswordField();
+		
+		// if ($this->getCheckFieldsModel($message)){
+
+		// echo "a";
+		// $response = $this->generateLoginFormHTML($message);
+		// } 
+		// else 
+		// if($this->getLoggedinModel($message)){
+		// 	echo "b";
+		// 	$response = $this->generateLogoutButtonHTML($message);
+		
+		//}
+		//;
+		//$this->getLoggedOutModel($message);
+		//$response = $this->generateLogoutButtonHTML($message);
+
+		
+
+		 //$this->getCheckFieldsModel($message);
+		 //$response = $this->generateLoginFormHTML($message);
+		// $this->getLoggedinModel($message);
+		// $response = $this->generateLogoutButtonHTML($message);
+		//if()
+		
+
+
+	 	// if($this->submitForm()){
+		// 	if(!isset($_SESSION["loggedIn"])){
+		// 		$message = "Welcome";
+		// 		$_SESSION["loggedIn"] = $message;
 				
-			}	
-			unset($_SESSION["loggedOut"]);
-			$response = $this->generateLogoutButtonHTML($message);	
-		} else  */
+		// 	}	
+		// 	unset($_SESSION["loggedOut"]);
+			
+		// 	unset($_SESSION["checkFields"]);
+		// 	$response = $this->generateLogoutButtonHTML($message);	
+		// } else  
 		// if($this->loggedIn()){
 		// 	unset($_SESSION["loggedOut"]);
+		// 	echo "ahhaha";
+		// 	$message = "";
 		// 	$response = $this->generateLogoutButtonHTML($message);	
 		// }
-		// else 
+		//  else 
+		// // else 
 		if(isset($_POST['LoginView::Logout'])) {
 			if(!isset($_SESSION["loggedOut"])){
 				$message = "Bye bye!";
 				$_SESSION["loggedOut"] = $message;	
 			} 
-			$response = $this->generateLoginFormHTML($message);		
-		} else if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
+		 	$response = $this->generateLoginFormHTML($message);		
+		} else 
+		if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
 			$message = $_SESSION["cookiesMessage"];
 			$response = $this->generateLogoutButtonHTML($message);
 		 }
@@ -115,15 +180,21 @@ class LoginView {
 	
 
 
-	public function getCheckFieldsModel(&$message){
-		if (isset($_POST['LoginView::Login'])){
-			return new checkFieldsModel($message);
-		}
-	}
+	// public function getCheckFieldsModel(&$message){
+	// 	if (isset($_POST['LoginView::Login'])){
+	// 		return new checkFieldsModel($message);
+	// 	}
+	// }
 
 	public function getLoggedinModel(&$message){
 		if (isset($_POST['LoginView::Login'])){
 			return new loggedInModel($message);
+		}
+	}
+
+	public function getLoggedOutModel(&$message){
+		if(isset($_POST['LoginView::Logout'])) {
+			return new loggedOutModel($message);
 		}
 	}
 
@@ -156,24 +227,25 @@ class LoginView {
 
 	//när man klickar på submit, kollar username och password
 
-	// public function submitForm(){
-	// 	if(isset($_POST[self::$login])){
-	// 		if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
-	// 			$_SESSION["username"] = $this->getUsername();
-	// 			$_SESSION["password"] = $this->getPassword();
-	// 			$this->logInCookie();
-	// 			return true;
-	// 		}else{
-	// 			return false;
+	public function submitForm(){
+		if(isset($_POST[self::$login])){
+			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
+				$_SESSION["username"] = $this->getUsername();
+				$_SESSION["password"] = $this->getPassword();
+				$this->logInCookie();
+				return true;
+			}else{
+				return false;
 
-	// 		}
-	// 	} 
-	// }
+			}
+		} 
+	}
 
-	//inloggad sålänge sessionen finns
+//inloggad sålänge sessionen finns
 
 	public function loggedIn(){
 			if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
+				echo "ahhaha2";
 				return true;
 			} else {
 				return false;

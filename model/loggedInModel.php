@@ -2,17 +2,34 @@
 
 class loggedInModel{
     public function __construct(&$message){
+       // if (isset($_POST['LoginView::Login'])){
         if($this->submitForm()){
             if(!isset($_SESSION["loggedIn"])){
-				$message = "Welcome";
-				$_SESSION["loggedIn"] = $message;	
+				$message = "Welcome";		
 			}	
+			if (!$_SESSION["test"]){
+                echo "mnm,,2";
+                $_SESSION["test"] = "hej";
+            }
 			unset($_SESSION["loggedOut"]);
+			//unset($_SESSION["checkFields"]);
+		//}
         } else if($this->loggedIn()){
-			unset($_SESSION["loggedOut"]);
-			$message = "";
-        }
+			 unset($_SESSION["loggedOut"]);
+			 if (!$_SESSION["test"]){
+                echo "mnm,,2adadada";
+                $_SESSION["test"] = "hej";
+            }
+			// //unset($_SESSION["checkFields"]);
+			// echo "jjjj ";
+			// $message = "";
+			// if($_SESSION["loggedInSession"]){
+            //     echo "ja2";
+            //     unset($_SESSION["loggedInSession"]);
+            // }
+       
     }
+}
 
     private function getUsername() {
 		$username = (isset($_POST['LoginView::UserName']) ? $_POST['LoginView::UserName'] : null);
@@ -43,6 +60,7 @@ class loggedInModel{
 
 	public function loggedIn(){
         if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
+			echo "joojo";
             return true;
         } else {
             return false;

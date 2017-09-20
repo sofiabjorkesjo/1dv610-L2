@@ -4,17 +4,52 @@
 //lägg in alla regler osv här
 
 class checkFieldsModel{
+
+  
     
     public function __construct(&$message){
+        if (isset($_POST['LoginView::Login'])){
         if($this->checkPasswordField()){
-            $message = "Password is missing";		
+            $message = "Password is missing";
+            if (!$_SESSION["checkFields"]){
+                echo "ja1";
+                $_SESSION["checkFields"] = "hej";
+            }
+            // if($_SESSION["checkFields"]){
+            //     echo "ja1";
+            //     unset($_SESSION["checkFields"]);
+            // }
         } else if($this->checkFields()){
             $message = "Username is missing";
-           
+            if (!$_SESSION["checkFields"]){
+                echo "ja2";
+                $_SESSION["checkFields"] = "hej";
+            }
+           // $_SESSION["checkFields"] = $message;
+        //    if($_SESSION["checkFields"]){
+        //     echo "ja2";
+        //     unset($_SESSION["checkFields"]);
+        // }
+       //$_SESSION["checkFields"] = $message;
         } else if ($this->checkUsernameAndPassword()){
-            $message = "Wrong name or password";
-           
+            $message = "Wrong name or password22";
+            echo "hej";	
+            if (!$_SESSION["checkFields"]){
+                echo "ja3";
+                $_SESSION["checkFields"] = "hej";
+            }
+            // if($_SESSION["checkFields"]){
+            //     echo "ja2";
+            //     unset($_SESSION["checkFields"]);
+            // } else {
+            //     $_SESSION["checkFields"] = "message";
+            // }
+            
         }
+        return true;
+    }
+    
+
         
 
     }
@@ -30,13 +65,14 @@ class checkFieldsModel{
     }
     
     private function getPassword(){
-		$password = $_POST['LoginView::Password'];
+		$password = isset($_POST['LoginView::Password']);
 		return $password;
 	}
 
     public function checkPasswordField() {
 			if($this->getUsername() == "Admin" && $this->getPassword() == ""){
                 $this->getRequestUserName();
+                echo "heh";
 				return true;
 		}
     }
@@ -59,7 +95,11 @@ class checkFieldsModel{
 			
 				return true;
 			}
-	}
+    }
+    
+    // public function test(){
+    //     if()
+    // }
 }
 
 
