@@ -17,10 +17,14 @@ class loggedInModel{
 			 if (!$_SESSION["loggedIn"]){
 				$message = "";
                 $_SESSION["loggedIn"] = $message;
-            }
+			}
+			
 
        
-    }
+	}
+	// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
+	// 	$message = $_SESSION["cookiesMessage"];
+	//  }
 }
 
     private function getUsername() {
@@ -40,7 +44,7 @@ class loggedInModel{
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				$_SESSION["username"] = $this->getUsername();
 				$_SESSION["password"] = $this->getPassword();
-				//$this->logInCookie();
+				$this->logInCookie();
 				return true;
 			}else{
 				return false;
@@ -56,7 +60,18 @@ class loggedInModel{
         } else {
             return false;
         }		
-}	
-    
+}
+
+public function logInCookie(){
+	
+	if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
+		$cookie_name = "LoginView::CookieName";
+		$cookie_value = "Admin";
+		$name = "LoginView::CookiePassword";
+		$value = hash('ripemd160', 'Password');
+		setcookie($name, $value, time() + 12360, "/");
+		setcookie($cookie_name, $cookie_value, time() + 12360, "/");
+	} 
+}
     
 }

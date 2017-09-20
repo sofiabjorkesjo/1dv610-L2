@@ -8,29 +8,34 @@ class checkFieldsModel{
   
     
     public function __construct(&$message){
-        if (isset($_POST['LoginView::Login'])){
-        if($this->checkPasswordField()){
+            if($this->checkFields()){
+                $message = "Username is missing";
+                if (!isset($_SESSION["checkFields"])){ 
+                   // unset($_SESSION["checkFields"]);     
+                    $_SESSION["checkFields"] = $message;;
+                }
+              //  var_dump($_SESSION);
+            }
+        else if($this->checkPasswordField()){
+            //echo "a";
             $message = "Password is missing";
             if (!isset($_SESSION["checkFields"])){  
+               // unset($_SESSION["checkFields"]);
                 $_SESSION["checkFields"] = $message;;
             }
-        } else if($this->checkFields()){
-            $message = "Username is missing";
-            if (!isset($_SESSION["checkFields"])){
-               
-                $_SESSION["checkFields"] = $message;;
-            }
+           // var_dump($_POST);
+        
         } else if ($this->checkUsernameAndPassword()){
-            $message = "Wrong name or password";
-           	
-            if (!isset($_SESSION["checkFields"])){
-               
-                $_SESSION["checkFields"] = $message;;
+            $message = "Wrong name or password"; 	
+            if (!isset($_SESSION["checkFields"])){  
+              //  unset($_SESSION["checkFields"]);  
+                $_SESSION["checkFields"] = $message;
             }
+          //  var_dump($_SESSION);
        
-        }
+         }
 
-    }
+
     
 
         
@@ -48,41 +53,42 @@ class checkFieldsModel{
     }
     
     private function getPassword(){
-		$password = isset($_POST['LoginView::Password']);
+		$password = (isset($_POST['LoginView::Password']) ? $_POST['LoginView::Password'] : null);
 		return $password;
-	}
+    }
+    
+    //FIXA
+    public function checkFields(){
+        if (isset($_POST['LoginView::Login'])){
+        if($this->getUsername() == "" && $this->getPassword() == "" 
+        || $this->getUsername() == "" && $this->getPassword() == "Password"){
+            return true;       
+    }
+}
+}
 
     public function checkPasswordField() {
-			if($this->getUsername() == "Admin" && $this->getPassword() == ""){
+        if (isset($_POST['LoginView::Login'])){
+            if($this->getUsername() == "Admin" && $this->getPassword() == ""){
+                echo "aaa";
                 $this->getRequestUserName();
-                echo "heh";
 				return true;
 		}
     }
+}
     
-    public function checkFields(){
-		
-            if($this->getUsername() == "" && $this->getPassword() == "" || $this->getUsername() == "" && $this->getPassword() == "Password"
-            ){
-				return true;
-            
-		}
-    }
     
+    //FIXA
     public function checkUsernameAndPassword(){
-			 if($this->getUsername() == "Admin" && $this->getPassword() !== "Password"||
+        if (isset($_POST['LoginView::Login'])){
+			 if(
+            $this->getUsername() == "Admin" && $this->getPassword() !== "Password"||
 			    $this->getUsername() !== "Admin" && $this->getPassword() == "Password"){
                 $this->getRequestUserName();
-    
-                
-			
 				return true;
 			}
     }
-    
-    // public function test(){
-    //     if()
-    // }
+}
 }
 
 

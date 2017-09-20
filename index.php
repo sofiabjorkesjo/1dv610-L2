@@ -40,10 +40,11 @@ if(isset($_POST['LoginView::Logout'])){
    // unset($_SESSION["renderLoggedIn"]);
 }
 
-if($a->submitForm()){
-    
+if($a->submitForm()){   
     $lv->render(true, $v, $dtv);
-} else {
+} else if ($a->loggedIn()){
+    $lv->render(true, $v, $dtv);
+}else {
     $lv->render(false, $v, $dtv);
 }
 

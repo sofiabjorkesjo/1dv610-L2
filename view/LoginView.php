@@ -120,10 +120,10 @@ class LoginView {
 		// 	} 
 		//  	$response = $this->generateLoginFormHTML($message);		
 		// } else 
-		if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
-			$message = $_SESSION["cookiesMessage"];
-			$response = $this->generateLogoutButtonHTML($message);
-		 }
+		// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
+		// 	$message = $_SESSION["cookiesMessage"];
+		// 	$response = $this->generateLogoutButtonHTML($message);
+		//  }
 		return $response;	
 	}
 
@@ -226,19 +226,19 @@ class LoginView {
 	// 		}		
 	// }	
 
-	public function logInCookie(){
+	// public function logInCookie(){
 		
-		if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
-			$cookie_name = "LoginView::CookieName";
-			$cookie_value = "Admin";
-			$name = "LoginView::CookiePassword";
-			$value = hash('ripemd160', 'Password');
-			setcookie($name, $value, time() + 12360, "/");
-			setcookie($cookie_name, $cookie_value, time() + 12360, "/");
-		} 
+	// 	if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
+	// 		$cookie_name = "LoginView::CookieName";
+	// 		$cookie_value = "Admin";
+	// 		$name = "LoginView::CookiePassword";
+	// 		$value = hash('ripemd160', 'Password');
+	// 		setcookie($name, $value, time() + 12360, "/");
+	// 		setcookie($cookie_name, $cookie_value, time() + 12360, "/");
+	// 	} 
 		
 		
-	}
+	// }
 
 
 	}
