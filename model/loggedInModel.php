@@ -5,10 +5,19 @@ class loggedInModel{
         if($this->submitForm()){
 			unset($_SESSION["checkFields"]);
 			unset($_SESSION["loggedOut"]);
-            if(!isset($_SESSION["loggedIn"])){
-				$message = "Welcome";	
-				$_SESSION["loggedIn"] = $message;			
-			}	else {
+            if(!isset($_SESSION["loggedIn"]) && isset($_POST['LoginView::KeepMeLoggedIn']) ){
+				//if (isset($_POST['LoginView::KeepMeLoggedIn'])){
+					$this->logInCookie();
+					$message = "Welcome and you will be remembered";	
+					$_SESSION["loggedIn"] = $message;
+				//}
+				//$message = "Welcome";	
+				//$_SESSION["loggedIn"] = $message;
+				//var_dump($_SESSION);			
+			}	else if (!isset($_SESSION["loggedIn"]) && !isset($_POST['LoginView::KeepMeLoggedIn'])){
+				$message = "Welcome";
+				$_SESSION["loggedIn"] = $message;
+			}else{
 				$message = "";
 			}
         } else if($this->loggedIn()){
@@ -17,13 +26,47 @@ class loggedInModel{
 			 if (!$_SESSION["loggedIn"]){
 				$message = "";
                 $_SESSION["loggedIn"] = $message;
-			}
-			
-
+			} 
+		} else if($this->checkCookie()){
+			if (!isset($_SESSION["loggedIn"])){
+				$message = "Welcome back with cookie";
+                $_SESSION["loggedIn"] = $message;
+			} 
+		}
+		// }else if ($this->checkCookieAndSession()){
+		// 	if (!isset($_SESSION["loggedIn"])){
+		// 		echo "finns ej";
+		// 		$message = "Welcome and you will be remembered";
+        //         $_SESSION["loggedIn"] = $message;
+		// 	} else {
+		// 		$message = "";
+		// 	}
+		// } else if ($this->checkCookie()){
+		// 	if (!isset($_SESSION["loggedIn"])){
+		// 		$message = "Welcome back with cookie";
+        //         $_SESSION["loggedIn"] = $message;
+		// 	} else {
+		// 		$message = "";
+		// 	}
+		// }
        
-	}
-	// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
-	// 	$message = $_SESSION["cookiesMessage"];
+	// } else if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"])){
+	// 	if (!isset($_SESSION["loggedIn"])){
+	// 		echo "v";
+	// 		$message = "Welcome back with cookie";
+	// 		$_SESSION["loggedIn"] = $message;
+	// 	} else {
+	// 		echo "a";
+	// 		$message = "";
+	// 	}
+	// }
+	// else if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
+	// 	//$message = "Welcome back with cookie";
+	// 		//$_SESSION["cookiesMessage"] = $message;
+	// 		echo "yoyo";
+	// 		//echo $message;
+	// 		$message = "hhshs";
+	// 	//$message = $_SESSION["cookiesMessage"];
 	//  }
 }
 
@@ -44,7 +87,10 @@ class loggedInModel{
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				$_SESSION["username"] = $this->getUsername();
 				$_SESSION["password"] = $this->getPassword();
-				$this->logInCookie();
+				// if (isset($_POST['LoginView::KeepMeLoggedIn'])){
+				// 	$this->logInCookie();
+				// }
+				//$this->checkCookieAndSession();
 				return true;
 			}else{
 				return false;
@@ -73,5 +119,30 @@ public function logInCookie(){
 		setcookie($cookie_name, $cookie_value, time() + 12360, "/");
 	} 
 }
-    
+
+public function checkCookie(){
+	if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"])){
+		return true;
+		echo"asasa";
+	}
 }
+
+// public function checkCookieAndSession(){
+
+// 	// if (isset($_POST['LoginView::KeepMeLoggedIn'])){
+// 	// 	$this->logInCookie();
+// 	// 	echo "dd";
+// 	// 	return true;
+// 	// } else {
+// 	// 	echo"k";
+// 	// 	return false;
+// 	// }
+// 	if(isset($_SESSION["username"]) && isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"])){
+// 		echo "hahahah";
+// 		return true;
+// 	}
+// }
+}
+
+
+    

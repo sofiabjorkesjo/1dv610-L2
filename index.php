@@ -13,6 +13,8 @@ require_once('model/loggedInModel.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
+
+
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
 $dtv = new DateTimeView();
@@ -20,14 +22,15 @@ $lv = new LayoutView();
 $a = new loggedInModel($message);
 
 
-
-
 session_start();
 
-if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {    
-    $message = "Welcome back with cookie";
-    $_SESSION["cookiesMessage"] = $message;
-}
+
+
+// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {    
+//     $message = "Welcome back with cookie";
+//     echo "jajja";
+//     $_SESSION["cookiesMessage"] = $message;
+// }
 
 
 
@@ -44,6 +47,9 @@ if($a->submitForm()){
     $lv->render(true, $v, $dtv);
 } else if ($a->loggedIn()){
     $lv->render(true, $v, $dtv);
+    //FIXA
+}else if(){
+
 }else {
     $lv->render(false, $v, $dtv);
 }
