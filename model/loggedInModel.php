@@ -173,10 +173,18 @@ class loggedInModel{
 	}
 
 	public function checkIfLoggedIn(){
-		if (isset($_SESSION["username"]) && isset($_SESSION["password"])){
-			$_SESSION["message"] = "";
+		if (isset($_SESSION["username"]) && isset($_SESSION["password"]) && !isset($_COOKIE["LoginView::CookieName"])){
+			$_SESSION["message"] = "bb";
+			echo "jdjd";
 			return true;
+		} else {
+		//if(isset($_SESSION["username"]) && isset($_SESSION["password"]) && !isset($_COOKIE["LoginView::CookieName"])){
+		//	echo "rrrr";
+		//	$_SESSION["message"] = "bb3";
+			return false;
+
 		}
+	
 	}
 
 		//if(isset($_POST['LoginView::KeepMeLoggedIn') kalla på den 
@@ -192,15 +200,32 @@ class loggedInModel{
 	} 
 }
 
+//FIXA
+
 public function setCookieToSesion(){
 	if (!isset($_SESSION["username"]) && isset($_COOKIE["LoginView::CookieName"])){
-		echo "hhhfhfh";
-		$_SESSION["message"] = "test";
-		return true;
+		if($_COOKIE["LoginView::CookieName"] == "Admin" && $_COOKIE["LoginView::CookiePassword"] == hash('ripemd160', 'Password')){
+			//$_SESSION["username"] = $_COOKIE["LoginView::CookieName"];
+			//$_SESSION["password"] = $_COOKIE["LoginView::CookiePassword"];
+			$_SESSION["message"] = "Welcome back with cookie";
+		//var_dump($_SESSION);
+		echo $_SESSION["password"];
+		echo $_SESSION["username"];
+			$_SESSION["message"] = "Welcome back with cookie";
+			return true;
+		} else {
+			$_SESSION["message"] = "aaa";
+			echo "hfh0000";
+			return false;
+		}
+		
+	
+		
 	}
 }
+}
 
-	}
+	
 
 
 
