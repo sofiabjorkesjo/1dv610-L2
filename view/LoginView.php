@@ -35,20 +35,27 @@ class LoginView {
 		$response = $this->generateLoginFormHTML($message);
 
 		new checkFieldsModel($message);
-		new loggedInModel($message);
+		//new loggedInModel($message);
 		new loggedOutModel($message);
+		$loggedInModel = new loggedInModel();
 
-		 if (isset($_SESSION["checkFields"])){
-			$response = $this->generateLoginFormHTML($message);
-		}  
-		
-		if (isset($_SESSION["loggedIn"])){
+		if ($loggedInModel->loggedIn()) {
+			
+			$message = $_SESSION["message"];
 			$response = $this->generateLogoutButtonHTML($message);
-		} 
-
-		if (isset($_SESSION["loggedOut"])){
-			$response = $this->generateLoginFormHTML($message);
 		}
+
+		//  if (isset($_SESSION["checkFields"])){
+		// 	$response = $this->generateLoginFormHTML($message);
+		// }  
+		
+		// if (isset($_SESSION["loggedIn"])){
+		// 	$response = $this->generateLogoutButtonHTML($message);
+		// } 
+
+		// if (isset($_SESSION["loggedOut"])){
+		// 	$response = $this->generateLoginFormHTML($message);
+		// }
 		return $response;	
 	}
 

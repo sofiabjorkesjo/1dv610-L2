@@ -19,7 +19,7 @@ ini_set('display_errors', 'On');
 $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
-//$a = new loggedInModel($message);
+$a = new loggedInModel();
 
 
 
@@ -38,8 +38,12 @@ if(isset($_POST['LoginView::Logout'])){
     setcookie("LoginView::CookiePassword", "", time() - 12360, "/");
 }
 
-
-   $lv->render(false, $v, $dtv);
+    if($a->loggedIn()){
+        $lv->render(true, $v, $dtv);
+    } else {
+        $lv->render(false, $v, $dtv);
+    }
+   
 
 
 

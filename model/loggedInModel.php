@@ -46,17 +46,17 @@
 // }
 	
 	
-    private function getUsername() {
-		$username = (isset($_POST['LoginView::UserName']) ? $_POST['LoginView::UserName'] : null);
-		return $username;
-	}
+    // private function getUsername() {
+	// 	$username = (isset($_POST['LoginView::UserName']) ? $_POST['LoginView::UserName'] : null);
+	// 	return $username;
+	// }
 
 
 
-	private function getPassword(){
-		$password = $_POST['LoginView::Password'];
-		return $password;
-	}
+	// private function getPassword(){
+	// 	$password = $_POST['LoginView::Password'];
+	// 	return $password;
+	// }
 
 //     public function submitForm(){
 // 		if(isset($_POST['LoginView::Login'])){
@@ -130,28 +130,59 @@
 
 class loggedInModel{
 	public function __construct(){
-
+		if($this->loggedIn() && isset($_POST['LoginView::KeepMeLoggedIn'])){
+			$_SESSION["message"] = "Welcome and you will be remembered";
+			$this->logInCookie();
+		} else {
+			$_SESSION["message"] = "Welcome";
+		}
 	}
 
 
-	public function loggedIn()(
-		return true;
-	)
+
+	private function getUsername() {
+		$username = (isset($_POST['LoginView::UserName']) ? $_POST['LoginView::UserName'] : null);
+		return $username;
+	}
+
+
+
+	private function getPassword(){
+		$password = $_POST['LoginView::Password'];
+		return $password;
+	}
+
+
+	public function loggedIn(){
+		if($this->logIn() || $this->checkIfLoggedIn()){
+			return true;
+		}
+		
+	}
 
 	public function logIn(){
+		
 		if(isset($_POST['LoginView::Login'])){
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				$_SESSION["username"] = $this->getUsername();
 				$_SESSION["password"] = $this->getPassword();
-				
+			
+				return true;
 			}
 		}
+	}
+
+	public function checkIfLoggedIn(){
+		if (isset($_SESSION["username"]) && isset($_SESSION["password"])){
+			$_SESSION["message"] = "";
+			return true;
+		}
+	}
 
 		//if(isset($_POST['LoginView::KeepMeLoggedIn') kalla på den 
 
-		// public function logInCookie(){
-	
-	if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
+	 public function logInCookie(){
+		if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
 		$cookie_name = "LoginView::CookieName";
 		$cookie_value = "Admin";
 		$name = "LoginView::CookiePassword";
@@ -162,7 +193,7 @@ class loggedInModel{
 }
 
 	}
-}
+
 
 
     
