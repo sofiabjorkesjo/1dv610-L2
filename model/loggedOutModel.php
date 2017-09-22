@@ -1,5 +1,4 @@
 <?php
-
 class loggedOutModel{
     public function __construct(&$message){
 		if(isset($_POST['LoginView::Logout'])) {
