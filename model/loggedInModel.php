@@ -132,7 +132,7 @@ class loggedInModel{
 	public function __construct(){
 		if($this->loggedIn() && isset($_POST['LoginView::KeepMeLoggedIn'])){
 			$_SESSION["message"] = "Welcome and you will be remembered";
-			$this->logInCookie();
+			$this->setCookie();
 		} else {
 			$_SESSION["message"] = "Welcome";
 		}
@@ -154,7 +154,7 @@ class loggedInModel{
 
 
 	public function loggedIn(){
-		if($this->logIn() || $this->checkIfLoggedIn()){
+		if($this->logIn() || $this->checkIfLoggedIn() || $this->setCookieToSesion()){
 			return true;
 		}
 		
@@ -181,7 +181,7 @@ class loggedInModel{
 
 		//if(isset($_POST['LoginView::KeepMeLoggedIn') kalla på den 
 
-	 public function logInCookie(){
+	 public function setCookie(){
 		if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
 		$cookie_name = "LoginView::CookieName";
 		$cookie_value = "Admin";
@@ -190,6 +190,14 @@ class loggedInModel{
 		setcookie($name, $value, time() + 12360, "/");
 		setcookie($cookie_name, $cookie_value, time() + 12360, "/");
 	} 
+}
+
+public function setCookieToSesion(){
+	if (!isset($_SESSION["username"]) && isset($_COOKIE["LoginView::CookieName"])){
+		echo "hhhfhfh";
+		$_SESSION["message"] = "test";
+		return true;
+	}
 }
 
 	}
