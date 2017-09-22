@@ -49,77 +49,6 @@ class LoginView {
 		if (isset($_SESSION["loggedOut"])){
 			$response = $this->generateLoginFormHTML($message);
 		}
-
-		
-		// new loggedInModel($message);
-		// if($_SESSION["loggedInSession"]){
-		// 	echo "hehehe";
-		// 	$response = $this->generateLogoutButtonHTML($message);
-		// }
-		//$a->checkPasswordField();
-		// if(new checkFieldsModel()){
-		// 	echo "ahah";
-		// 	$this->generateLogoutButtonHTML($message);
-		// }
-
-		//$checkFieldsModel = new checkFieldsModel($message);
-		//$checkFieldsModel->$this->checkPasswordField();
-		
-		// if ($this->getCheckFieldsModel($message)){
-
-		// echo "a";
-		// $response = $this->generateLoginFormHTML($message);
-		// } 
-		// else 
-		// if($this->getLoggedinModel($message)){
-		// 	echo "b";
-		// 	$response = $this->generateLogoutButtonHTML($message);
-		
-		//}
-		//;
-		//$this->getLoggedOutModel($message);
-		//$response = $this->generateLogoutButtonHTML($message);
-
-		
-
-		 //$this->getCheckFieldsModel($message);
-		 //$response = $this->generateLoginFormHTML($message);
-		// $this->getLoggedinModel($message);
-		// $response = $this->generateLogoutButtonHTML($message);
-		//if()
-		
-
-
-	 	// if($this->submitForm()){
-		// 	if(!isset($_SESSION["loggedIn"])){
-		// 		$message = "Welcome";
-		// 		$_SESSION["loggedIn"] = $message;
-				
-		// 	}	
-		// 	unset($_SESSION["loggedOut"]);
-			
-		// 	unset($_SESSION["checkFields"]);
-		// 	$response = $this->generateLogoutButtonHTML($message);	
-		// } else  
-		// if($this->loggedIn()){
-		// 	unset($_SESSION["loggedOut"]);
-		// 	echo "ahhaha";
-		// 	$message = "";
-		// 	$response = $this->generateLogoutButtonHTML($message);	
-		// }
-		//  else 
-		// // else 
-		// if(isset($_POST['LoginView::Logout'])) {
-		// 	if(!isset($_SESSION["loggedOut"])){
-		// 		$message = "Bye bye!";
-		// 		$_SESSION["loggedOut"] = $message;	
-		// 	} 
-		//  	$response = $this->generateLoginFormHTML($message);		
-		// } else 
-		// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {
-		// 	$message = $_SESSION["cookiesMessage"];
-		// 	$response = $this->generateLogoutButtonHTML($message);
-		//  }
 		return $response;	
 	}
 
@@ -167,74 +96,9 @@ class LoginView {
 		';
 	}
 
-
-	//sätter det rätta användarnamnet och sparar det i en session
-
-	// private function setCorrectUsername(){
-	// 	$username = $_SESSION["username"] = "Admin";
-	// 	return $username;
-	// }
-
-	// //sätter det rätta lösenordet och sparar det i en session
-
-	// private function setCorrectPassword(){
-	// 	$password = $_SESSION["password"] = "Password";
-	// 	return $password;
-	// }
 	
-	// //hämtar det username som användaren skriver in
-	// private function getUsername() {
-	// 	$username = (isset($_POST[self::$name]) ? $_POST[self::$name] : null);
-	// 	return $username;
-	// }
 
 
-
-	// private function getPassword(){
-	// 	$password = $_POST[self::$password];
-	// 	return $password;
-	// }
-
-	//när man klickar på submit, kollar username och password
-
-	// public function submitForm(){
-	// 	if(isset($_POST[self::$login])){
-	// 		if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
-	// 			$_SESSION["username"] = $this->getUsername();
-	// 			$_SESSION["password"] = $this->getPassword();
-	// 			$this->logInCookie();
-	// 			return true;
-	// 		}else{
-	// 			return false;
-
-	// 		}
-	// 	} 
-	// }
-
-//inloggad sålänge sessionen finns
-
-	// public function loggedIn(){
-	// 		if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
-	// 			echo "ahhaha2";
-	// 			return true;
-	// 		} else {
-	// 			return false;
-	// 		}		
-	// }	
-
-	// public function logInCookie(){
-		
-	// 	if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
-	// 		$cookie_name = "LoginView::CookieName";
-	// 		$cookie_value = "Admin";
-	// 		$name = "LoginView::CookiePassword";
-	// 		$value = hash('ripemd160', 'Password');
-	// 		setcookie($name, $value, time() + 12360, "/");
-	// 		setcookie($cookie_name, $cookie_value, time() + 12360, "/");
-	// 	} 
-		
-		
-	// }
 
 
 	}

@@ -19,10 +19,7 @@ ini_set('display_errors', 'On');
 $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
-
-
-
-$a = new loggedInModel($message);
+//$a = new loggedInModel($message);
 
 
 
@@ -41,37 +38,11 @@ if(isset($_POST['LoginView::Logout'])){
     setcookie("LoginView::CookiePassword", "", time() - 12360, "/");
 }
 
-if($a->ea() == true){
-    $lv->render(true, $v, $dtv);
-} else {
-    $lv->render(false, $v, $dtv);
-}
 
-// if($a->submitForm()){   
-//     if($_SESSION["username"] == "Admin" && $_SESSION["loggedIn" == "Welcome and you will be remembered"]) {
-//         echo"wiiiiiiii";
-//     }
-//     $lv->render(true, $v, $dtv);
-// // }else if($a->checkCookie()){
-// //     $lv->render(true, $v, $dtv);
-// } else if($a->loggedIn()){
-//     $lv->render(true, $v, $dtv);
+   $lv->render(false, $v, $dtv);
 
-// } else {
-//     $lv->render(false, $v, $dtv);
-// }
 
-// if($v->submitForm()){
-//     $lv->render(true, $v, $dtv);
-// }else 
-// if($v->loggedIn()){
-//     $lv->render(true, $v, $dtv);
-// } else 
-// if(isset($_SESSION["cookiesMessage"]) && isset($_COOKIE["LoginView::CookieName"])){
-//     $lv->render(true, $v, $dtv);
-// }else{
-//     $lv->render(false, $v, $dtv);
-// }
+
 
 
 
