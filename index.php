@@ -13,7 +13,7 @@ require_once('model/loggedInModel.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-
+session_start();
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
@@ -22,15 +22,9 @@ $lv = new LayoutView();
 $a = new loggedInModel($message);
 
 
-session_start();
 
 
 
-// if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])) {    
-//     $message = "Welcome back with cookie";
-//     echo "jajja";
-//     $_SESSION["cookiesMessage"] = $message;
-// }
 
 
 
@@ -40,16 +34,25 @@ if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION["loggedIn"]);
     unset($_SESSION["cookiesMessage"]); 
     unset($_SESSION["usernameValue"]);
-   // unset($_SESSION["renderLoggedIn"]);
+    setcookie("LoginView::CookieName", "", time() - 12360, "/");
+    setcookie("LoginView::CookiePassword", "", time() - 12360, "/");
 }
 
 if($a->submitForm()){   
     $lv->render(true, $v, $dtv);
 } else if ($a->loggedIn()){
     $lv->render(true, $v, $dtv);
+    var_dump($_SESSION);
+}else if($_SESSION["username"] && $_COOKIE["LoginView::CookieName"] && $_SESSION["loggedIn"] = "Welcome back with cookie" ){
+    
+    $lv->render(true, $v, $dtv);
     //FIXA
-}else if(){
-
+// }else if(!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"]) && isset($_COOKIE["LoginView::CookiePassword"])){
+//     $lv->render(true, $v, $dtv);
+// }else if($_SESSION["loggedIn"] = "Welcome back with cookie" && !$_SESSION[["usernameValue"]]){
+//     $lv->render(true, $v, $dtv);
+// }else if($_SESSION["loggedIn"] = "Welcome back with cookie" && $_COOKIE["LoginView::CookieName"]){
+//     $lv->render(true, $v, $dtv);
 }else {
     $lv->render(false, $v, $dtv);
 }
