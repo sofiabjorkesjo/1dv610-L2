@@ -2,6 +2,8 @@
 
 
 class LayoutView {
+
+ 
   
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
     echo '<!DOCTYPE html>
@@ -12,7 +14,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          <a href="?register" name="LoginView::Link">Register new user</a>
+          ' . $v->showLink() .'
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">

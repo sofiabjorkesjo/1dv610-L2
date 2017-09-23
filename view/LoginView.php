@@ -2,6 +2,7 @@
 	require_once('model/checkFieldsModel.php');
 	require_once('model/loggedInModel.php');
 	require_once('model/loggedOutModel.php');
+	require_once('view/RegisterView.php');
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -11,7 +12,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	public static $link = 'LoginView::Link';
+	private static $link = 'LoginView::Link';
 	
 	
 	
@@ -40,10 +41,31 @@ class LoginView {
 		if (isset($_SESSION["loggedOut"])){
 			$response = $this->generateLoginFormHTML($message);
 		}
+
+		$registerView = new RegisterView();
+		if(isset($_GET['register'])){
+			//$response = $registerView->renderRegisterView();
+			//$registerView->renderRegisterView($response);
+			$response = $registerView->generateRegisterForm();
+
+		}
+		// if($registerView->renderRegisterView()){
+		// 	echo "uuuu";
+		// }
+		// if (header("Location: ?register")){
+		// 	echo "rrr";
+			
+		// }
 		
 	
 		
 		return $response;	
+	}
+
+	public function showLink(){
+		return '
+		<a href="?register" name="' . self::$link .'">Register new user</a>
+		';
 	}
 	
 	/**
