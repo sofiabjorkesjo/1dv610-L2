@@ -70,7 +70,6 @@ class checkFieldsModel{
     public function checkPasswordField() {
         if (isset($_POST['LoginView::Login'])){
             if($this->getUsername() == "Admin" && $this->getPassword() == ""){
-                echo "aaa";
                 $this->getRequestUserName();
 				return true;
 		}
