@@ -3,6 +3,7 @@
 	require_once('model/loggedInModel.php');
 	require_once('model/loggedOutModel.php');
 	require_once('view/RegisterView.php');
+	require_once('model/registerModel.php');
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -13,6 +14,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	private static $link = 'LoginView::Link';
+	public static $linkName = 'Register a new user';
 	
 	
 	
@@ -31,6 +33,8 @@ class LoginView {
 		new checkFieldsModel($message);
 		new loggedInModel($message);
 		new loggedOutModel($message);
+		$registerView = new RegisterView();
+		
 		 if (isset($_SESSION["checkFields"])){
 			$response = $this->generateLoginFormHTML($message);
 		}  
@@ -42,32 +46,40 @@ class LoginView {
 			$response = $this->generateLoginFormHTML($message);
 		}
 
-		$registerView = new RegisterView();
-		if(isset($_GET['register'])){
-			//$response = $registerView->renderRegisterView();
-			//$registerView->renderRegisterView($response);
-			$response = $registerView->generateRegisterForm();
-
-		}
-		// if($registerView->renderRegisterView()){
-		// 	echo "uuuu";
-		// }
-		// if (header("Location: ?register")){
-		// 	echo "rrr";
-			
-		// }
 		
 	
+		if(isset($_GET['register'])){
+			$message = "";
+			$response = $registerView->generateRegisterForm($message);
+			if (new registerModel($message)){
+				$response = $registerView->generateRegisterForm($message);
+			}
+			
+		} 
 		
+
+		//$RegisterModel = new RegisterModel($message);
+		//$RegisterModel->register();
 		return $response;	
 	}
 
 	public function showLink(){
-		return '
-		<a href="?register" name="' . self::$link .'">Register new user</a>
-		';
+		if (!isset($_SESSION["username"])){
+		if (isset($_GET['register'])){
+			$registerView = new RegisterView();
+			return $registerView->showLinkBack();			
+		} else {	
+		return $this->showLinkRegister();
 	}
-	
+}
+}
+
+public function showLinkRegister()
+{
+	return '
+	<a href="?register">' . self::$linkName . '</a>
+	';
+}	
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -88,7 +100,7 @@ class LoginView {
 	* @return  void, BUT writes to standard output!
 	*/
 	private function generateLoginFormHTML($message) {
-		
+
 		return '
 			<form method="post"> 
 				<fieldset>

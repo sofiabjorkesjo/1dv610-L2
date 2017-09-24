@@ -1,5 +1,6 @@
 <?php
-
+require_once('view/LayoutView.php');
+require_once('view/RegisterView.php');
 
 class LayoutView {
 
@@ -36,6 +37,14 @@ class LayoutView {
       return '<h2>Not logged in</h2>';
     }
   }
+
+  // public function showLink(){
+  //   if (!isset($_SESSION["username"])){
+  //     $v = new LoginView()
+  //    $v->showLinkRegister();
+  //     echo "sjsj";
+  //   }
+  // }
 
  
 }

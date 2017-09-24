@@ -4,18 +4,24 @@ class RegisterView {
     private static $message = "RegisterView::Message";
     private static $username = "RegisterView::UserName";
     private static $password = "RegisterView::Password";
-    private static $repeatPassword = "RegisterViewPasswordRepeat";
+    private static $repeatPassword = "RegisterView::PasswordRepeat";
     private static $registration = "DoRegistration";
+    private static $link = "Back to login";
+
+public function showLinkBack(){
+    return '
+    <a href="?">' . self::$link . '</a>
+    ';
+}
 
 
-
-public function generateRegisterForm(){
+public function generateRegisterForm($message){
     return '
     <h2>Register new user</h2>
     <form action="?register" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Register a new user - Write username and password</legend>
-            <p id="' . self::$message . '"></p>
+            <p id="' . self::$message . '">' . $message . '</p>
             <label for="' . self::$username . '">Username :</label>
             <input type="text" size="20" name="' . self::$username . '" id="' . self::$username .'" value>
             <br>
@@ -33,11 +39,9 @@ public function generateRegisterForm(){
     ';
 }
 
-public function renderRegisterView($response){
-
-        echo "hejhejhej";
-        $response = $this->generateRegisterForm();
-        return $response;
-    
-}
+// public function register(){
+//     if (isset($_POST[self::$registration ])){
+//         echo "jdjjdjd";
+//     }
+// }
 }
