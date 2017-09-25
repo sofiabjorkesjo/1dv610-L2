@@ -28,6 +28,7 @@ class LoginView {
 	
 	public function response() {
 		$_SESSION['usernameValue'] = "";
+		$_SESSION['usernameValueRegister'] = "";
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
 		new checkFieldsModel($message);

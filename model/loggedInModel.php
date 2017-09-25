@@ -5,14 +5,9 @@ class loggedInModel{
 			unset($_SESSION["checkFields"]);
 			unset($_SESSION["loggedOut"]);
             if(!isset($_SESSION["loggedIn"]) && isset($_POST['LoginView::KeepMeLoggedIn']) ){
-				//if (isset($_POST['LoginView::KeepMeLoggedIn'])){
 					$this->logInCookie();
 					$message = "Welcome and you will be remembered";	
-					$_SESSION["loggedIn"] = $message;
-				//}
-				//$message = "Welcome";	
-				//$_SESSION["loggedIn"] = $message;
-				//var_dump($_SESSION);			
+					$_SESSION["loggedIn"] = $message;		
 			}	else if (!isset($_SESSION["loggedIn"]) && !isset($_POST['LoginView::KeepMeLoggedIn'])){
 				$message = "Welcome";
 				$_SESSION["loggedIn"] = $message;
@@ -29,7 +24,9 @@ class loggedInModel{
 		} else if($this->checkCookie()){
 			if (!isset($_SESSION["loggedIn"])){
 				$message = "Welcome back with cookie";
-                $_SESSION["loggedIn"] = $message;
+				$_SESSION["loggedIn"] = $message;
+				var_dump($_SESSION);
+				//sätt session till cookie 
 			} 
 		}
 	

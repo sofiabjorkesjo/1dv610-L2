@@ -17,7 +17,6 @@ class checkFieldsModel{
               //  var_dump($_SESSION);
             }
         else if($this->checkPasswordField()){
-            //echo "a";
             $message = "Password is missing";
             if (!isset($_SESSION["checkFields"])){  
                // unset($_SESSION["checkFields"]);

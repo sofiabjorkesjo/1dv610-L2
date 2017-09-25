@@ -38,13 +38,6 @@ class LayoutView {
     }
   }
 
-  // public function showLink(){
-  //   if (!isset($_SESSION["username"])){
-  //     $v = new LoginView()
-  //    $v->showLinkRegister();
-  //     echo "sjsj";
-  //   }
-  // }
-
+  
  
 }
