@@ -1,17 +1,29 @@
 <?php 
-
+require_once('view/RegisterView.php');
 class registerModel{
+
+    
     public function __construct(&$message){
+        $registerView = new RegisterView();
         if($this->registerFail()){
             $message = "Username has too few characters, at least 3 characters. <br> Password has too few characters, at least 6 characters.";
         } else if ($this->checkPasswordRegister()){
             $message =  "Password has too few characters, at least 6 characters.";  
         } else if ($this->checkUsernameRegister()){
+            $registerView->setValue();
             $message = "Username has too few characters, at least 3 characters.";
         } else if ($this->checkPasswordLength()){
+            $registerView->setValue();
             $message = "Password has too few characters, at least 6 characters.";
         } else if($this->checkPasswordRepeat()){
+            $registerView->setValue();
             $message = "Passwords do not match.";
+        } else if($this->chechIfUserExist()){
+            $registerView->setValue();
+            $message = "User exists, pick another username.";
+        } else if($this->checkForTags()){
+            $registerView->setValue();
+            $message = "Username contains invalid characters.";
         }
     }
 
@@ -25,8 +37,9 @@ class registerModel{
 		return strlen($password);
     }
 
-    private function getUsernameRegister() {          
-        return $_SESSION['usernameValueRegister'] = $_POST['RegisterView::UserName'];
+    public function getUsernameRegister(){
+        return (isset($_POST["RegisterView::UserName"]) ? $_POST["RegisterView::UserName"] : null);
+		
     }
     
     private function getPasswordRegister(){
@@ -44,16 +57,15 @@ class registerModel{
             if($_POST["RegisterView::UserName"] == "" && $_POST["RegisterView::Password"] == "" 
                 && $_POST["RegisterView::PasswordRepeat"] == ""){
                 return true;
-            }   
-        } else {
-            return false;
-        }
+            }  else {
+                return false;
+            } 
+        } 
     }
 
     public function checkPasswordRegister(){
         if(isset($_POST["RegisterView::Register"])){
            if ($this->getUsernameLength() >= 3 && $_POST["RegisterView::Password"] == ""){
-                $this->getUsernameRegister();
                 return true;
            } else {
                 return false;
@@ -64,23 +76,21 @@ class registerModel{
     public function checkUsernameRegister(){
         if (isset($_POST["RegisterView::Register"])){
             if($this->getUsernameLength() < 3 && $this->getPasswordRegister() == $this->getPasswordRepeat()){
-                $this->getUsernameRegister();
                 return true;
-            } 
-        } else {
-            return false;
-        }
+            } else {
+                return false;
+            }
+        } 
     }
 
     public function checkPasswordLength(){
         if (isset($_POST["RegisterView::Register"])){
             if ($this->getUsernameLength() >= 3 && $this->getPasswordLength() <= 6 
             && $this->getPasswordRegister() == $this->getPasswordRepeat()){
-                $this->getUsernameRegister();
                 return true;
-                }
-        } else {
-            return false;
+                } else {
+                    return false;
+        } 
         }
     }
 
@@ -88,12 +98,31 @@ class registerModel{
         if(isset($_POST["RegisterView::Register"])){
             if($this->getUsernameLength() >=3 && $this->getPasswordLength() >= 6 &&
                 $this->getPasswordRegister() != $this->getPasswordRepeat()){
-                    $this->getUsernameRegister();
                     return true;
+                } else {
+                    return false;
                 }
-        } else {
-            return false;
-        }
+        } 
+    }
+
+    public function chechIfUserExist(){
+        if(isset($_POST["RegisterView::Register"])){
+            if ($this->getUsernameRegister() == "Admin"){
+                return true;
+            } else {
+                return false;
+            }
+        } 
+    }
+
+    public function checkForTags(){
+        if(isset($_POST["RegisterView::Register"])){
+            if($this->getUsernameRegister() != strip_tags($this->getUsernameRegister())){
+                return true;
+            } else {
+                return false;
+            }
+        } 
     }
 
 

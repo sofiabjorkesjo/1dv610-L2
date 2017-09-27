@@ -1,5 +1,6 @@
 <?php 
 
+
 class RegisterView {
     private static $message = "RegisterView::Message";
     private static $username = "RegisterView::UserName";
@@ -15,6 +16,16 @@ class RegisterView {
         ';
     }
 
+    public function setValue(){
+        if(isset($_POST['RegisterView::UserName'])){
+            $test = $_POST['RegisterView::UserName'];
+            return strip_tags($test);
+        } else {
+            return "";
+        }
+       
+    }
+
 
     public function generateRegisterForm($message){
         return '
@@ -24,7 +35,7 @@ class RegisterView {
                 <legend>Register a new user - Write username and password</legend>
                 <p id="' . self::$message . '">' . $message . '</p>
                 <label for="' . self::$username . '">Username :</label>
-                <input type="text" size="20" name="' . self::$username . '" id="' . self::$username .'" value="' . $_SESSION['usernameValueRegister'] .'">
+                <input type="text" size="20" name="' . self::$username . '" id="' . self::$username .'" value="' . $this->setValue  () .'">
                 <br>
                 <label for="' . self::$password .'">Password :</label>
                 <input type="password" size="20" name="' . self::$password . '" id="' . self::$password . '" value>
