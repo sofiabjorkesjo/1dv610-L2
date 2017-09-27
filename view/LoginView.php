@@ -16,8 +16,6 @@ class LoginView {
 	private static $link = 'LoginView::Link';
 	public static $linkName = 'Register a new user';
 	
-	
-	
 	/**
 	 * Create HTTP response
 	 *
@@ -27,40 +25,36 @@ class LoginView {
 	 */
 	
 	public function response() {
+		
 		$_SESSION['usernameValue'] = "";
 		$_SESSION['usernameValueRegister'] = "";
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
+
 		new checkFieldsModel($message);
 		new loggedInModel($message);
-		new loggedOutModel($message);
+		
 		$registerView = new RegisterView();
 		
-		 if (isset($_SESSION["checkFields"])){
+		if (isset($_SESSION["checkFields"])){
 			$response = $this->generateLoginFormHTML($message);
 		}  
-		
 		if (isset($_SESSION["loggedIn"])){
 			$response = $this->generateLogoutButtonHTML($message);
 		} 
-		if (isset($_SESSION["loggedOut"])){
+
+		if(isset($_POST['LoginView::Logout'])) {
+			new loggedOutModel($message);
 			$response = $this->generateLoginFormHTML($message);
 		}
-
-		
 	
 		if(isset($_GET['register'])){
 			$message = "";
 			$response = $registerView->generateRegisterForm($message);
 			if (new registerModel($message)){
 				$response = $registerView->generateRegisterForm($message);
-			}
-			
+			}		
 		} 
-		
-
-		//$RegisterModel = new RegisterModel($message);
-		//$RegisterModel->register();
 		return $response;	
 	}
 
@@ -70,22 +64,23 @@ class LoginView {
 			$registerView = new RegisterView();
 			return $registerView->showLinkBack();			
 		} else {	
-		return $this->showLinkRegister();
+			return $this->showLinkRegister();
+		}
+		}
 	}
-}
-}
 
-public function showLinkRegister()
-{
-	return '
-	<a href="?register">' . self::$linkName . '</a>
-	';
-}	
+	public function showLinkRegister(){
+		return '
+		<a href="?register">' . self::$linkName . '</a>
+		';
+	}	
+
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
+
 	private function generateLogoutButtonHTML($message) {
 		return '
 			<form  method="post" >
@@ -121,7 +116,4 @@ public function showLinkRegister()
 			</form>
 		';
 	}
-
-
-
-	}
+}

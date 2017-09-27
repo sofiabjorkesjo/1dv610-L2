@@ -15,8 +15,7 @@ class loggedInModel{
 				$message = "";
 			}
         } else if($this->loggedIn()){
-			 unset($_SESSION["loggedOut"]);
-			 unset($_SESSION["checkFields"]);
+			
 			 if (!$_SESSION["loggedIn"]){
 				$message = "";
                 $_SESSION["loggedIn"] = $message;
@@ -25,8 +24,8 @@ class loggedInModel{
 			if (!isset($_SESSION["loggedIn"])){
 				$message = "Welcome back with cookie";
 				$_SESSION["loggedIn"] = $message;
-				var_dump($_SESSION);
-				//sätt session till cookie 
+				$_SESSION["username"] = $_COOKIE["LoginView::CookieName"];
+				$_SESSION["password"] = $_COOKIE["LoginView::CookiePassword"];				
 			} 
 		}
 	
@@ -46,10 +45,6 @@ class loggedInModel{
 			if($this->getUsername() == "Admin" && $this->getPassword() == "Password"){
 				$_SESSION["username"] = $this->getUsername();
 				$_SESSION["password"] = $this->getPassword();
-				// if (isset($_POST['LoginView::KeepMeLoggedIn'])){
-				// 	$this->logInCookie();
-				// }
-				//$this->checkCookieAndSession();
 				return true;
 			}else{
 				return false;
@@ -57,8 +52,8 @@ class loggedInModel{
 		} 
     }
 	public function loggedIn(){
-        if(isset($_SESSION["username"]) && isset($_SESSION["password"])){
-            return true;
+        if(isset($_SESSION["username"]) && isset($_SESSION["password"]) ){
+			return true;
         } else {
             return false;
         }		
@@ -77,7 +72,7 @@ public function logInCookie(){
 public function checkCookie(){
 	if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) && isset($_COOKIE["LoginView::CookieName"])){
 		return true;
-		echo"asasa";
+	
 	}
 }
 

@@ -4,8 +4,6 @@ require_once('view/RegisterView.php');
 
 class LayoutView {
 
- 
-  
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
     echo '<!DOCTYPE html>
       <html>
@@ -36,8 +34,5 @@ class LayoutView {
     else {
       return '<h2>Not logged in</h2>';
     }
-  }
-
-  
- 
+  } 
 }
