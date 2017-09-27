@@ -53,21 +53,20 @@ class registerModel{
     public function checkPasswordRegister(){
         if(isset($_POST["RegisterView::Register"])){
            if ($this->getUsernameLength() >= 3 && $_POST["RegisterView::Password"] == ""){
-            $this->getUsernameRegister();
-               return true;
+                $this->getUsernameRegister();
+                return true;
            } else {
-               return false;
+                return false;
            }
         }
     }
 
     public function checkUsernameRegister(){
         if (isset($_POST["RegisterView::Register"])){
-            if($this->getUsernameLength() < 3 && $this->getPasswordRegister() ==
-            $this->getPasswordRepeat()){
-                    $this->getUsernameRegister();
-                    return true;
-                } 
+            if($this->getUsernameLength() < 3 && $this->getPasswordRegister() == $this->getPasswordRepeat()){
+                $this->getUsernameRegister();
+                return true;
+            } 
         } else {
             return false;
         }
@@ -76,9 +75,9 @@ class registerModel{
     public function checkPasswordLength(){
         if (isset($_POST["RegisterView::Register"])){
             if ($this->getUsernameLength() >= 3 && $this->getPasswordLength() <= 6 
-                && $this->getPasswordRegister() == $this->getPasswordRepeat()){
-                    $this->getUsernameRegister();
-                    return true;
+            && $this->getPasswordRegister() == $this->getPasswordRepeat()){
+                $this->getUsernameRegister();
+                return true;
                 }
         } else {
             return false;
