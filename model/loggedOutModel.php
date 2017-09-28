@@ -1,10 +1,5 @@
 <?php
-class loggedOutModel{
-
-	/**
-    * Construct call functions
-    * Set $message
-	*/
+class LoggedOutModel{
 	
     public function __construct(&$message){
 		if($this->loggOut()){
@@ -16,11 +11,6 @@ class loggedOutModel{
 			}	
 		}
 	}
-
-	/**
-    * Log out and unset sessions and cookies.
-    * return true
-    */
 
 	public function loggOut(){
 		unset($_SESSION["username"]);

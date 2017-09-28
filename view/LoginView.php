@@ -1,9 +1,9 @@
 <?php
-	require_once('model/checkFieldsModel.php');
-	require_once('model/loggedInModel.php');
-	require_once('model/loggedOutModel.php');
+	require_once('model/CheckFieldsModel.php');
+	require_once('model/LoggedInModel.php');
+	require_once('model/LoggedOutModel.php');
 	require_once('view/RegisterView.php');
-	require_once('model/registerModel.php');
+	require_once('model/RegisterModel.php');
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -30,8 +30,8 @@ class LoginView {
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
 
-		new checkFieldsModel($message);
-		new loggedInModel($message);
+		new CheckFieldsModel($message);
+		new LoggedInModel($message);
 		
 		$registerView = new RegisterView();
 		
@@ -44,23 +44,19 @@ class LoginView {
 		} 
 
 		if(isset($_POST['LoginView::Logout'])) {
-			new loggedOutModel($message);
+			new LoggedOutModel($message);
 			$response = $this->generateLoginFormHTML($message);
 		}
 	
 		if(isset($_GET['register'])){
 			$message = "";
 			$response = $registerView->generateRegisterForm($message);
-			if (new registerModel($message)){
+			if (new RegisterModel($message)){
 				$response = $registerView->generateRegisterForm($message);
 			}		
 		} 
 		return $response;	
 	}
-
-	/**
-	* Returns which link to show
-	*/
 
 	public function showLink(){
 		if (!isset($_SESSION["username"])){

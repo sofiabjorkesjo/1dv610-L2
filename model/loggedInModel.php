@@ -1,10 +1,5 @@
 <?php
-class loggedInModel{
-
-	/**
-	* Construct call functions
-	* Set $message
-	*/
+class LoggedInModel{
 
     public function __construct(&$message){
         if($this->submitForm()){
@@ -35,28 +30,15 @@ class loggedInModel{
 		}	
 	}
 
-	/**
-	* Return value from 'LoginView::UserName'
-	*/
-
     private function getUsername() {
 		$username = (isset($_POST['LoginView::UserName']) ? $_POST['LoginView::UserName'] : null);
 		return $username;
 	}
 
-	/**
-	* Return value from 'LoginView::Password'
-	*/
-
 	private function getPassword(){
 		$password = $_POST['LoginView::Password'];
 		return $password;
 	}
-
-	/**
-	* Check if submit form.
-	* Return true if username and password are right
-	*/
 
     public function submitForm(){
 		if(isset($_POST['LoginView::Login'])){
@@ -69,11 +51,6 @@ class loggedInModel{
 			}
 		} 
 	}
-
-	/**
-	* Check if logged in.
-	* Return true or false
-	*/
 	
 	public function loggedIn(){
         if(isset($_SESSION["username"]) && isset($_SESSION["password"]) ){
@@ -82,11 +59,6 @@ class loggedInModel{
             return false;
         }		
 	}
-
-	/**
-	* Set cookie.
-	* Return void.
-	*/
 
 	public function logInCookie(){
 		if(!isset($_COOKIE["LoginView::CookieName"]) && !isset($_COOKIE["LoginView::CookiePassword"])){
@@ -98,11 +70,6 @@ class loggedInModel{
 			setcookie($cookie_name, $cookie_value, time() + 12360, "/");
 		} 
 	}
-
-	/**
-	* Check if sesssion for username and password are set.
-	* Return true or false
-	*/
 
 	public function checkCookie(){
 		if (!isset($_SESSION["username"]) && !isset($_SESSION["password"]) 

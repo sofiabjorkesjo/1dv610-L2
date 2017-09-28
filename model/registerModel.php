@@ -1,12 +1,7 @@
 <?php 
 require_once('view/RegisterView.php');
 
-class registerModel{
-
-    /**
-    * Construct call functions
-    * Set $message
-    */
+class RegisterModel{
 
     public function __construct(&$message){
         $registerView = new RegisterView();
@@ -32,54 +27,29 @@ class registerModel{
         }
     }
 
-    /**
-    * returns length of username
-    */
-
     public function getUsernameLength(){
         $username = (isset($_POST["RegisterView::UserName"]) ? $_POST["RegisterView::UserName"] : null);
 		return strlen($username);
     }
-
-    /**
-    * returns length of password
-    */
 
     public function getPasswordLength(){
         $password = (isset($_POST["RegisterView::Password"]) ? $_POST["RegisterView::Password"] : null);
 		return strlen($password);
     }
 
-    /**
-    * returns username
-    */
-
     public function getUsernameRegister(){
         return (isset($_POST["RegisterView::UserName"]) ? $_POST["RegisterView::UserName"] : null);	
     }
-
-    /**
-    * returns length of password
-    */
     
     private function getPasswordRegister(){
         $password = $_POST["RegisterView::Password"];
 		return $password;
     }
 
-    /**
-    * returns length of password repeat
-    */
-
     private function getPasswordRepeat(){
         $password = $_POST["RegisterView::PasswordRepeat"];
 		return $password;
     }
-
-    /**
-    * check if register fails
-    * return true or false
-    */
 
     public function registerFail(){
         if (isset($_POST["RegisterView::Register"])){
@@ -92,11 +62,6 @@ class registerModel{
         } 
     }
 
-    /**
-    * check if register password fails
-    * return true or false
-    */
-
     public function checkPasswordRegister(){
         if(isset($_POST["RegisterView::Register"])){
            if ($this->getUsernameLength() >= 3 && $_POST["RegisterView::Password"] == ""){
@@ -107,11 +72,6 @@ class registerModel{
         }
     }
 
-    /**
-    * check if register username fails
-    * return true or false
-    */
-
     public function checkUsernameRegister(){
         if (isset($_POST["RegisterView::Register"])){
             if($this->getUsernameLength() < 3 && $this->getPasswordRegister() == $this->getPasswordRepeat()){
@@ -121,11 +81,6 @@ class registerModel{
             }
         } 
     }
-
-    /**
-    * check password length
-    * return true or false
-    */
 
     public function checkPasswordLength(){
         if (isset($_POST["RegisterView::Register"])){
@@ -138,11 +93,6 @@ class registerModel{
         }
     }
 
-    /**
-    * check password repeat
-    * return true or false
-    */
-
     public function checkPasswordRepeat(){
         if(isset($_POST["RegisterView::Register"])){
             if($this->getUsernameLength() >=3 && $this->getPasswordLength() >= 6 &&
@@ -154,11 +104,6 @@ class registerModel{
         } 
     }
 
-    /**
-    * check if user exist
-    * return true or false
-    */
-
     public function chechIfUserExist(){
         if(isset($_POST["RegisterView::Register"])){
             if ($this->getUsernameRegister() == "Admin"){
@@ -168,11 +113,6 @@ class registerModel{
             }
         } 
     }
-
-    /**
-    * check for html tags
-    * return true or false
-    */
 
     public function checkForTags(){
         if(isset($_POST["RegisterView::Register"])){

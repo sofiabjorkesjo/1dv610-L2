@@ -16,11 +16,6 @@ class RegisterView {
         ';
     }
 
-    /**
-    * Set value on input username
-    * Returns value or empty string
-    */
-
     public function setValue(){
         if(isset($_POST['RegisterView::UserName'])){
             $test = $_POST['RegisterView::UserName'];
