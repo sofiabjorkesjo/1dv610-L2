@@ -1,15 +1,26 @@
 <?php
 class loggedOutModel{
+
+	/**
+    * Construct call functions
+    * Set $message
+	*/
+	
     public function __construct(&$message){
 		if($this->loggOut()){
 			if(!isset($_SESSION["loggedOut"])){		
 				$message = "Bye bye!";
-				$_SESSION["loggedOut"] = "uytre";
+				$_SESSION["loggedOut"] = $message;
 			} else {
 				$message = "";
 			}	
 		}
 	}
+
+	/**
+    * Log out and unset sessions and cookies.
+    * return true
+    */
 
 	public function loggOut(){
 		unset($_SESSION["username"]);

@@ -16,16 +16,25 @@ class RegisterView {
         ';
     }
 
+    /**
+    * Set value on input username
+    * Returns value or empty string
+    */
+
     public function setValue(){
         if(isset($_POST['RegisterView::UserName'])){
             $test = $_POST['RegisterView::UserName'];
             return strip_tags($test);
         } else {
             return "";
-        }
-       
+        }   
     }
 
+    /**
+	* Generate HTML code for register form
+	* @param $message, String output message
+	* @return  void, BUT writes to standard output!
+	*/
 
     public function generateRegisterForm($message){
         return '

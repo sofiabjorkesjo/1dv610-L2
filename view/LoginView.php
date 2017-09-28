@@ -4,6 +4,7 @@
 	require_once('model/loggedOutModel.php');
 	require_once('view/RegisterView.php');
 	require_once('model/registerModel.php');
+
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -25,9 +26,7 @@ class LoginView {
 	 */
 	
 	public function response() {
-		
 		$_SESSION['usernameValue'] = "";
-		$_SESSION['usernameValueRegister'] = "";
 		$message = "";
 		$response = $this->generateLoginFormHTML($message);
 
@@ -39,6 +38,7 @@ class LoginView {
 		if (isset($_SESSION["checkFields"])){
 			$response = $this->generateLoginFormHTML($message);
 		}  
+		
 		if (isset($_SESSION["loggedIn"])){
 			$response = $this->generateLogoutButtonHTML($message);
 		} 
@@ -57,6 +57,10 @@ class LoginView {
 		} 
 		return $response;	
 	}
+
+	/**
+	* Returns which link to show
+	*/
 
 	public function showLink(){
 		if (!isset($_SESSION["username"])){

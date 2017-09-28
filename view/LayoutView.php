@@ -14,8 +14,8 @@ class LayoutView {
         <body>
           <h1>Assignment 2</h1>
           ' . $v->showLink() .'
-          ' . $this->renderIsLoggedIn($isLoggedIn) . '
-          
+
+          ' . $this->renderIsLoggedIn($isLoggedIn) . ' 
           <div class="container">
               ' . $v->response() . '
               
@@ -27,8 +27,7 @@ class LayoutView {
   }
   
   private function renderIsLoggedIn($isLoggedIn) {
-    if ($isLoggedIn) {
-      
+    if ($isLoggedIn) {  
       return '<h2>Logged in</h2>';
     }
     else {
